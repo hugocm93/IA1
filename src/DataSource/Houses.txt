@@ -1,0 +1,12 @@
+Aries 50
+Touro 55
+Gemeos 60
+Cancer 70
+Leao 75
+Virgem 80
+Libra 85
+Escorpiao 90
+Sagitario 95
+Capricornio 100
+Aquario 110
+Peixes 120
