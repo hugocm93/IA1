@@ -11,7 +11,6 @@ public class Flow {
 	
 
 	public static void createWindow(){
-
 		window = new JFrame("Zodiac Knights");
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE );
 		window.setVisible(true);
@@ -23,14 +22,13 @@ public class Flow {
 	
 	public static void createMapPanel(){
 		mapPanel = new MapPanel();
-
 	}
 
 	public static void goToMapPanel(){
-		
 		window.add(mapPanel);
 		mapPanel.setVisible(true);
-		window.setSize(1024,750);
-		
+		window.setSize(Constants.ScreenWidth(), Constants.ScreenHeight());		
 	}
+	
+	
 }
