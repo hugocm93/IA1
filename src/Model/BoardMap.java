@@ -4,7 +4,6 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.Random;
 
 import javax.imageio.ImageIO;
 
@@ -38,14 +37,13 @@ public class BoardMap {
 				System.out.println("IO error");
 			}
 		}
-		//tilesImg[0] = this.cropImage(map, new Rectangle(1*70, 13*70, 70, 70));
+
 		tilesImg[0] = this.cropImage(map, new Rectangle(6*70, 21*70, 70, 70));
 		tilesImg[1] = this.cropImage(map, new Rectangle(22*70, 22*70, 70, 70));
 		tilesImg[2] = this.cropImage(map, new Rectangle(2*70, 2*70, 70, 70));
 		tilesImg[3] = this.cropImage(map, new Rectangle(3*70, 31*70, 70, 70));
 		tilesImg[4] = this.cropImage(map, new Rectangle(3*70, 25*70, 70, 70));
-		tilesImg[5] = this.cropImage(map, new Rectangle(16*70, 30*70, 70, 70));
-		
+		tilesImg[5] = this.cropImage(map, new Rectangle(16*70, 30*70, 70, 70));	
 	}
 
 	public BufferedImage getTile(int number){
