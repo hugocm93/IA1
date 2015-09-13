@@ -7,7 +7,6 @@ public class Knight {
 	private int energyPoints;
 	
 	
-	
 	public Knight(String name, float cosmicPower, int energyPoints) {
 		super();
 		this.name = name;
