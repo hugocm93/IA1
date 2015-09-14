@@ -6,7 +6,6 @@ public class MapPanelController {
 	
 	private static BoardMap boardMap;
 	
-	
 	public MapPanelController() {
 		super();
 		

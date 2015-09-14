@@ -27,7 +27,6 @@ public class BoardMap {
 		for(int i=0;i<Constants.mapSide;i++){
 			for(int j=0;j<Constants.mapSide;j++){
 				matrix[i][j] = in.nextInt();
-				System.out.println(matrix[i][j]);
 			}
 		}
 		

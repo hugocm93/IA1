@@ -1,6 +1,5 @@
 import Controller.Flow;
 
-
 public class Main {
 
 	public static void main(String[] args) {
@@ -8,19 +7,13 @@ public class Main {
 
 		switch(aux){
 		case "Windows":
-			
-
 			break;
 
 		case "Mac":
-			
-
 			break;
 
 		case "Linux":
-			
 			break;
-
 		}
 		Flow.createWindow();
 	}
