@@ -2,7 +2,7 @@ package Controller;
 
 public class Constants {
 	
-	static public int squareSize = 24;
+	static public int squareSize = 21;
 	static public int sideArea = 310;
 	static public int bottomArea = 35;
 	static public int mapSide = 42;

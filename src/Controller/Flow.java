@@ -20,6 +20,7 @@ public class Flow {
 	public static void goToMapPanel(){
 		mapPanel.setVisible(true);
 		mapPanel.addKeyListener(mapPanel);
+		mapPanel.addMouseListener(mapPanel);
 		window.setSize(Constants.widthDefault, Constants.heightDefault);
 		window.addKeyListener(mapPanel);
 	}

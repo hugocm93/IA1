@@ -1,5 +1,7 @@
 package Controller;
 
+import java.awt.Point;
+
 import Model.BoardMap;
 
 public class MapPanelController {
@@ -14,6 +16,10 @@ public class MapPanelController {
 
 	public static int getIndexOfImage(int i, int j){
 		return boardMap.getMatrix()[i][j];
+	}
+	
+	public static Point getStart(){
+		return boardMap.getStart();
 	}
 
 }

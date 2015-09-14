@@ -5,29 +5,42 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.awt.image.BufferedImageOp;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.xml.bind.JAXBException;
+
 import Controller.Constants;
 import Controller.MapPanelController;
 import org.imgscalr.Scalr;
+import org.xml.sax.SAXException;
 
-public class MapPanel extends JPanel implements KeyListener{
+import java.util.ListIterator;
+
+public class MapPanel extends JPanel implements KeyListener, MouseListener{
 
 	private static final long serialVersionUID = 1L;
 	private String path1 = System.getProperty("user.dir");
-	private String path3 = "/Images/"; 
+	private String path3 = "/src/Images/"; 
 	private BufferedImage map;
 	private BufferedImage tilesImg[] = new BufferedImage[]{null, null, null, null, null, null};
 	private BufferedImage players;
 	private BufferedImage player[][] = new BufferedImage[12][8];
 	private JLabel playerSprite[] = new JLabel[5]; 
 	private int x=0,y=0;
+	private JButton startButton;
+	private ArrayList<String> movements;
+
 
 
 	public MapPanel() {
@@ -35,31 +48,34 @@ public class MapPanel extends JPanel implements KeyListener{
 		this.getImages();
 		new MapPanelController();
 		playerSprite[0] = new JLabel();
-		playerSprite[1] = new JLabel();
-		playerSprite[2] = new JLabel();
-		playerSprite[3] = new JLabel();
-		playerSprite[4] = new JLabel();
+
 		this.add(playerSprite[0]);
-		this.add(playerSprite[1]);
-		this.add(playerSprite[2]);
-		this.add(playerSprite[3]);
-		this.add(playerSprite[4]);
-		
+
 		playerSprite[0].setVisible(true);
 		playerSprite[0].addKeyListener(this);
-		playerSprite[1].setVisible(true);
-		playerSprite[1].addKeyListener(this);
-		playerSprite[2].setVisible(true);
-		playerSprite[2].addKeyListener(this);
-		playerSprite[3].setVisible(true);
-		playerSprite[3].addKeyListener(this);
-		playerSprite[4].setVisible(true);
-		playerSprite[4].addKeyListener(this);
 
 		this.setFocusable(true);
 		this.requestFocus();
-		
-      this.setPreferredSize(new Dimension(Constants.ScreenWidth(), Constants.ScreenHeight()));
+
+		this.setPreferredSize(new Dimension(Constants.ScreenWidth(), Constants.ScreenHeight()));
+
+
+		x = (int) MapPanelController.getStart().getX()*Constants.squareSize;
+		y = (int) MapPanelController.getStart().getY()*Constants.squareSize;
+
+
+		startButton = new JButton("Start");
+		startButton.setVisible(true);
+		startButton.addMouseListener(this);
+		this.add(startButton);
+
+		movements = new ArrayList<String>();
+		movements.add("left");
+		movements.add("left");
+		movements.add("up");
+		movements.add("left");
+		movements.add("down");
+		movements.add("left");
 	}
 
 	public void paintComponent(Graphics g) {
@@ -72,11 +88,8 @@ public class MapPanel extends JPanel implements KeyListener{
 			}
 		}
 		playerSprite[0].setBounds(x, y, Constants.squareSize, Constants.squareSize);
-		playerSprite[1].setBounds(x, y, Constants.squareSize, Constants.squareSize);
-		playerSprite[2].setBounds(x, y, Constants.squareSize, Constants.squareSize);
-		playerSprite[3].setBounds(x, y, Constants.squareSize, Constants.squareSize);
-		playerSprite[4].setBounds(x, y, Constants.squareSize, Constants.squareSize);
-		
+
+		startButton.setBounds(Constants.squareSize*Constants.mapSide, Constants.squareSize*Constants.mapSide-30, 80, 30);
 
 		g.finalize();
 	}
@@ -87,7 +100,7 @@ public class MapPanel extends JPanel implements KeyListener{
 				map = ImageIO.read(new File(path1 + path3 + "terrains.png"));
 				players = ImageIO.read(new File(path1 + path3 + "actor310.png"));
 			} catch (IOException e) {
-				System.out.println("IO error");
+				System.out.println(path1 + path3);
 			}
 		}
 
@@ -116,18 +129,17 @@ public class MapPanel extends JPanel implements KeyListener{
 	@Override
 	public void keyTyped(KeyEvent e) {
 		//System.out.println(e.getKeyCode());
-		
-	
+
 	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
 		int code = e.getKeyCode();
 		System.out.println("A key was typed");
-		
+
 		x = playerSprite[0].getBounds().x;
 		y = playerSprite[0].getBounds().y;
-		
+
 		if (code == KeyEvent.VK_DOWN) {
 			this.walkDown(0);
 		}
@@ -140,6 +152,7 @@ public class MapPanel extends JPanel implements KeyListener{
 		if (code == KeyEvent.VK_RIGHT) {
 			this.walkRight(0);
 		}
+
 	}
 
 	@Override
@@ -147,9 +160,9 @@ public class MapPanel extends JPanel implements KeyListener{
 		// TODO Auto-generated method stub
 
 	}
-	
+
 	private void walkRight(int index){
-		
+
 		for(int i=1;i<4;i++){
 			playerSprite[index].setIcon(new ImageIcon(Scalr.resize(player[0+i-1][2], Constants.squareSize, (BufferedImageOp[])null)));
 			x += (Constants.squareSize/3);
@@ -166,7 +179,7 @@ public class MapPanel extends JPanel implements KeyListener{
 		}
 
 	}
-	
+
 	private void walkLeft(int index){
 		for(int i=1;i<4;i++){
 			playerSprite[index].setIcon(new ImageIcon(Scalr.resize(player[0+i-1][1], Constants.squareSize, (BufferedImageOp[])null)));
@@ -183,7 +196,7 @@ public class MapPanel extends JPanel implements KeyListener{
 
 		}
 	}
-	
+
 	private void walkUp(int index){
 		for(int i=1;i<4;i++){
 			playerSprite[index].setIcon(new ImageIcon(Scalr.resize(player[0+i-1][3], Constants.squareSize, (BufferedImageOp[])null)));
@@ -200,7 +213,7 @@ public class MapPanel extends JPanel implements KeyListener{
 
 		}
 	}
-	
+
 	private void walkDown(int index){
 		for(int i=1;i<4;i++){
 			playerSprite[index].setIcon(new ImageIcon(Scalr.resize(player[0+i-1][0], Constants.squareSize, (BufferedImageOp[])null)));
@@ -216,6 +229,59 @@ public class MapPanel extends JPanel implements KeyListener{
 			}
 		}
 	}
-	
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		if(e.getSource() == startButton){
+			System.out.println("Start");
+
+			ListIterator<String> ls = movements.listIterator();
+
+			while(ls.hasNext()){
+				String aux = "";
+
+				aux = ls.next();
+
+				if(aux == "right"){
+					this.walkRight(0);
+				}
+				if(aux == "left"){
+					this.walkLeft(0);
+				}
+				if(aux == "up"){
+					this.walkUp(0);
+				}
+				if(aux == "down"){
+					this.walkDown(0);
+				}
+			}
+		}
+
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
 
 }

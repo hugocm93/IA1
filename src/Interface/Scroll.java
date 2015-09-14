@@ -14,6 +14,8 @@ public class Scroll extends JFrame{
 	
 	        final JScrollPane scroll = new JScrollPane(map, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 	        scroll.setVisible(true);
+	        scroll.getVerticalScrollBar().setValue(scroll.getVerticalScrollBar().getMaximum());
+	        scroll.getVerticalScrollBar().setValue(scroll.getVerticalScrollBar().getMaximum());
 	        //this.setResizable(false);
 	        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	        this.setLayout(new BorderLayout());
