@@ -9,7 +9,7 @@ public class Graph {
 	private Graph lest;
 	private Graph west;
 	private int cost;
-	
+	private boolean visited;
 	
 	public Graph(int cost, Point self) {
 		super();
@@ -52,8 +52,11 @@ public class Graph {
 	public void setCost(int cost) {
 		this.cost = cost;
 	}
-	
-	
-	
+	public boolean isVisited() {
+		return visited;
+	}
+	public void setVisited(boolean visited) {
+		this.visited = visited;
+	}
 
 }

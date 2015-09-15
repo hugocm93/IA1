@@ -12,7 +12,11 @@ public class Flow {
 	
 	public static void createWindow(){
 		mapPanel = new MapPanel();
+		
 		window = new Scroll(mapPanel, "Zodiac Knights");
+		window.setVisible(true);
+		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//window.setResizable(false);
 		
 		Flow.goToMapPanel();
 	}
@@ -21,6 +25,7 @@ public class Flow {
 		mapPanel.setVisible(true);
 		mapPanel.addKeyListener(mapPanel);
 		mapPanel.addMouseListener(mapPanel);
+		
 		window.setSize(Constants.widthDefault, Constants.heightDefault);
 		window.addKeyListener(mapPanel);
 	}

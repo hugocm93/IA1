@@ -4,32 +4,25 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.awt.image.BufferedImageOp;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.xml.bind.JAXBException;
-
 import Controller.Constants;
 import Controller.MapPanelController;
 import org.imgscalr.Scalr;
-import org.xml.sax.SAXException;
-
 import java.util.ListIterator;
 
-public class MapPanel extends JPanel implements KeyListener, MouseListener{
+public class MapPanel extends Adapter{
 
 	private static final long serialVersionUID = 1L;
+	private int x=0,y=0;
 	private String path1 = System.getProperty("user.dir");
 	private String path3 = "/src/Images/"; 
 	private BufferedImage map;
@@ -37,14 +30,12 @@ public class MapPanel extends JPanel implements KeyListener, MouseListener{
 	private BufferedImage players;
 	private BufferedImage player[][] = new BufferedImage[12][8];
 	private JLabel playerSprite[] = new JLabel[5]; 
-	private int x=0,y=0;
 	private JButton startButton;
 	private ArrayList<String> movements;
 
-
-
 	public MapPanel() {
 		super();
+		
 		this.getImages();
 		new MapPanelController();
 		playerSprite[0] = new JLabel();
@@ -59,10 +50,8 @@ public class MapPanel extends JPanel implements KeyListener, MouseListener{
 
 		this.setPreferredSize(new Dimension(Constants.ScreenWidth(), Constants.ScreenHeight()));
 
-
 		x = (int) MapPanelController.getStart().getX()*Constants.squareSize;
 		y = (int) MapPanelController.getStart().getY()*Constants.squareSize;
-
 
 		startButton = new JButton("Start");
 		startButton.setVisible(true);
@@ -80,15 +69,14 @@ public class MapPanel extends JPanel implements KeyListener, MouseListener{
 
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		System.out.println("Paint");
 
 		for(int i=0;i<42;i++){
 			for(int k=0;k<42;k++){
 				g.drawImage(tilesImg[MapPanelController.getIndexOfImage(i, k)], Constants.squareSize*k, Constants.squareSize*i, Constants.squareSize, Constants.squareSize, null);
 			}
 		}
+		
 		playerSprite[0].setBounds(x, y, Constants.squareSize, Constants.squareSize);
-
 		startButton.setBounds(Constants.squareSize*Constants.mapSide, Constants.squareSize*Constants.mapSide-30, 80, 30);
 
 		g.finalize();
@@ -98,7 +86,7 @@ public class MapPanel extends JPanel implements KeyListener, MouseListener{
 		if(map==null){
 			try {
 				map = ImageIO.read(new File(path1 + path3 + "terrains.png"));
-				players = ImageIO.read(new File(path1 + path3 + "actor310.png"));
+				players = ImageIO.read(new File(path1 + path3 + "characters.png"));
 			} catch (IOException e) {
 				System.out.println(path1 + path3);
 			}
@@ -116,20 +104,12 @@ public class MapPanel extends JPanel implements KeyListener, MouseListener{
 				player[i][j] = this.cropImage(players, new Rectangle(i*32, j*32, 32, 32));
 			}
 		}
-
 	}
 
 	public BufferedImage cropImage(BufferedImage src, Rectangle rect) {
-
 		BufferedImage dest = src.getSubimage(rect.x, rect.y, rect.width, rect.height);
 
 		return dest; 
-	}
-
-	@Override
-	public void keyTyped(KeyEvent e) {
-		//System.out.println(e.getKeyCode());
-
 	}
 
 	@Override
@@ -155,45 +135,21 @@ public class MapPanel extends JPanel implements KeyListener, MouseListener{
 
 	}
 
-	@Override
-	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
 	private void walkRight(int index){
-
 		for(int i=1;i<4;i++){
 			playerSprite[index].setIcon(new ImageIcon(Scalr.resize(player[0+i-1][2], Constants.squareSize, (BufferedImageOp[])null)));
 			x += (Constants.squareSize/3);
-			playerSprite[index].setLocation(x, y);
-			this.paintImmediately(new Rectangle(playerSprite[index].getBounds().x - playerSprite[index].getBounds().width, playerSprite[index].getBounds().y - playerSprite[index].getBounds().height, playerSprite[index].getBounds().width*3, playerSprite[index].getBounds().height*3));
-
-			try {
-				Thread.sleep(100);
-			} catch (InterruptedException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-
+			
+			this.move(index);
 		}
-
 	}
 
 	private void walkLeft(int index){
 		for(int i=1;i<4;i++){
 			playerSprite[index].setIcon(new ImageIcon(Scalr.resize(player[0+i-1][1], Constants.squareSize, (BufferedImageOp[])null)));
 			x -= (Constants.squareSize/3);
-			playerSprite[index].setLocation(x, y);
-			this.paintImmediately(new Rectangle(playerSprite[index].getBounds().x - playerSprite[index].getBounds().width, playerSprite[index].getBounds().y - playerSprite[index].getBounds().height, playerSprite[index].getBounds().width*3, playerSprite[index].getBounds().height*3));
-
-			try {
-				Thread.sleep(100);
-			} catch (InterruptedException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-
+			
+			this.move(index);
 		}
 	}
 
@@ -201,46 +157,27 @@ public class MapPanel extends JPanel implements KeyListener, MouseListener{
 		for(int i=1;i<4;i++){
 			playerSprite[index].setIcon(new ImageIcon(Scalr.resize(player[0+i-1][3], Constants.squareSize, (BufferedImageOp[])null)));
 			y -= (Constants.squareSize/3);
-			playerSprite[index].setLocation(x, y);
-			this.paintImmediately(new Rectangle(playerSprite[index].getBounds().x - playerSprite[index].getBounds().width, playerSprite[index].getBounds().y - playerSprite[index].getBounds().height, playerSprite[index].getBounds().width*3, playerSprite[index].getBounds().height*3));
-
-			try {
-				Thread.sleep(100);
-			} catch (InterruptedException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-
+			
+			this.move(index);
 		}
 	}
-
+	
 	private void walkDown(int index){
 		for(int i=1;i<4;i++){
 			playerSprite[index].setIcon(new ImageIcon(Scalr.resize(player[0+i-1][0], Constants.squareSize, (BufferedImageOp[])null)));
 			y += (Constants.squareSize/3);
-			playerSprite[index].setLocation(x, y);
-			this.paintImmediately(new Rectangle(playerSprite[index].getBounds().x - playerSprite[index].getBounds().width, playerSprite[index].getBounds().y - playerSprite[index].getBounds().height, playerSprite[index].getBounds().width*3, playerSprite[index].getBounds().height*3));
-
-			try {
-				Thread.sleep(100);
-			} catch (InterruptedException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			
+			this.move(index);
 		}
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if(e.getSource() == startButton){
-			System.out.println("Start");
-
 			ListIterator<String> ls = movements.listIterator();
 
 			while(ls.hasNext()){
-				String aux = "";
-
-				aux = ls.next();
+				String aux = ls.next();
 
 				if(aux == "right"){
 					this.walkRight(0);
@@ -258,30 +195,15 @@ public class MapPanel extends JPanel implements KeyListener, MouseListener{
 		}
 
 	}
+	
+	private void move(int index){
+		playerSprite[index].setLocation(x, y);
+		this.paintImmediately(new Rectangle(playerSprite[index].getBounds().x - playerSprite[index].getBounds().width, playerSprite[index].getBounds().y - playerSprite[index].getBounds().height, playerSprite[index].getBounds().width*3, playerSprite[index].getBounds().height*3));
 
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e1) {
+			e1.printStackTrace();
+		}
 	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-
 }

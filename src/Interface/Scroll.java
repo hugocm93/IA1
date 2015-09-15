@@ -16,10 +16,9 @@ public class Scroll extends JFrame{
 	        scroll.setVisible(true);
 	        scroll.getVerticalScrollBar().setValue(scroll.getVerticalScrollBar().getMaximum());
 	        scroll.getVerticalScrollBar().setValue(scroll.getVerticalScrollBar().getMaximum());
-	        //this.setResizable(false);
-	        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	        
 	        this.setLayout(new BorderLayout());
 	        this.add(scroll, BorderLayout.CENTER);
-	        this.setVisible(true);
+	        
 	}
 }
