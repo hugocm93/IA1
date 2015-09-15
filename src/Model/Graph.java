@@ -10,6 +10,7 @@ public class Graph {
 	private Graph west;
 	private int cost;
 	private boolean visited;
+	private int f,g,h;
 	
 	public Graph(int cost, Point self) {
 		super();
