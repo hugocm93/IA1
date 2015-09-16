@@ -271,7 +271,7 @@ public class MapPanelController {
 					return 0;
 				}
 				else
-					return 0;
+					return 1;
 			}
 
 		});

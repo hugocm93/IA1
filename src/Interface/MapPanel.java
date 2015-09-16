@@ -10,13 +10,18 @@ import java.awt.image.BufferedImageOp;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+
 import Controller.Constants;
+import Controller.Flow;
 import Controller.MapPanelController;
+
 import org.imgscalr.Scalr;
+
 import java.util.ListIterator;
 
 public class MapPanel extends Adapter{
@@ -201,6 +206,9 @@ public class MapPanel extends Adapter{
 			Thread.sleep(100);
 		} catch (InterruptedException e1) {
 			e1.printStackTrace();
+		}
+		if(y<Constants.squareSize*Constants.mapSide/2){
+			Flow.scrollUp();
 		}
 	}
 }
