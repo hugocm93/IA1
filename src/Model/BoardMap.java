@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.HashMap;
 import java.util.Scanner;
+
 import Controller.Constants;
 
 public class BoardMap {
@@ -62,8 +63,10 @@ public class BoardMap {
 			}
 
 		this.connectGraph();
-		//this.printMap();
 		this.calcHCost();
+		this.connectGraph();
+		this.printMap();
+
 
 	}
 
@@ -144,8 +147,10 @@ public class BoardMap {
 							var = var.getSouth();
 						}
 					}
-
 					aux.setH(h);
+					//
+					graphMap.put(new Point(i,j), aux);
+
 				}
 			}
 	}
@@ -155,7 +160,8 @@ public class BoardMap {
 
 		while(nextl.getSouth()!=null){
 			while(nextl.getLest()!=null){
-				System.out.printf("%d ",nextl.getCost());
+				//System.out.printf("%d ",nextl.getCost());
+				System.out.printf("%d ",nextl.getH());
 				nextl = nextl.getLest();
 
 			}
