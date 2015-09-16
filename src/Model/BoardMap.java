@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.HashMap;
 import java.util.Scanner;
-
 import Controller.Constants;
 
 public class BoardMap {
@@ -61,14 +60,8 @@ public class BoardMap {
 					}
 				}
 			}
-
-		this.connectGraph();
-		this.calcHCost();
-		this.connectGraph();
-		this.printMap();
-
-
 	}
+
 
 	public int[][] getMatrix() {
 		return matrix;
@@ -86,90 +79,65 @@ public class BoardMap {
 		this.end = end;
 	}
 
-	private void connectGraph() {
-		for(int j=0;j<Constants.mapSide;j++)
-			for(int i=0;i<Constants.mapSide;i++){
-				{
-					Graph aux = graphMap.get(new Point(i,j));
 
-					aux.setNorth(graphMap.get(new Point(i,j-1)));
-					aux.setSouth(graphMap.get(new Point(i,j+1)));
-					aux.setLest(graphMap.get(new Point(i+1,j)));
-					aux.setWest(graphMap.get(new Point(i-1,j)));
-				}
-			}
+	public String getPath1() {
+		return path1;
 	}
 
-	private void calcHCost() {
-		for(int j=0;j<Constants.mapSide;j++)
-			for(int i=0;i<Constants.mapSide;i++){
-				{
-					Graph aux = graphMap.get(new Point(i,j));
-					Graph aux2 = null;
 
-					int x = end.x - i;
-					int y = end.y - j;
-
-					int h = 0;
-
-					if(x<0){
-						Graph var = aux;
-						for(int k=0 ; k<x*(-1);k++){
-							h += var.getWest().getCost();
-							aux2 = var;
-							var = var.getWest();
-						}
-					}
-					else if(x>0){
-						Graph var = aux;
-						for(int k=0 ; k<x;k++){
-							h += var.getLest().getCost();
-							aux2 = var;
-							var = var.getLest();
-						}
-					}
-					if(x==0){
-						aux2 = graphMap.get(new Point(i,j));
-					}
-					aux =  aux2;
-
-					if(y<0){
-						Graph var = aux;
-						for(int k=0 ; k<y*(-1);k++){
-							h += var.getNorth().getCost();
-							var = var.getNorth();
-						}
-					}
-					else if(y>0){
-						Graph var = aux;
-						for(int k=0 ; k<y;k++){			
-							h += var.getSouth().getCost();
-							var = var.getSouth();
-						}
-					}
-					aux.setH(h);
-					//
-					graphMap.put(new Point(i,j), aux);
-
-				}
-			}
+	public void setPath1(String path1) {
+		this.path1 = path1;
 	}
 
-	public void printMap(){
-		Graph nextl = graphMap.get(new Point(0,0)).getLest();
 
-		while(nextl.getSouth()!=null){
-			while(nextl.getLest()!=null){
-				//System.out.printf("%d ",nextl.getCost());
-				System.out.printf("%d ",nextl.getH());
-				nextl = nextl.getLest();
-
-			}
-			System.out.println();
-			nextl = nextl.getSouth();
-			while(nextl.getWest()!=null){
-				nextl = nextl.getWest();
-			}
-		}
+	public String getPath2() {
+		return path2;
 	}
+
+
+	public void setPath2(String path2) {
+		this.path2 = path2;
+	}
+
+
+	public Scanner getIn() {
+		return in;
+	}
+
+
+	public void setIn(Scanner in) {
+		this.in = in;
+	}
+
+
+	public Scanner getIn2() {
+		return in2;
+	}
+
+
+	public void setIn2(Scanner in2) {
+		this.in2 = in2;
+	}
+
+
+	public HashMap<Point, Graph> getGraphMap() {
+		return graphMap;
+	}
+
+
+	public void setGraphMap(HashMap<Point, Graph> graphMap) {
+		this.graphMap = graphMap;
+	}
+
+
+	public void setMatrix(int[][] matrix) {
+		this.matrix = matrix;
+	}
+
+
+	public void setStart(Point start) {
+		this.start = start;
+	}
+
+	
 }

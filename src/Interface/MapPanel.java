@@ -58,13 +58,16 @@ public class MapPanel extends Adapter{
 		startButton.addMouseListener(this);
 		this.add(startButton);
 
-		movements = new ArrayList<String>();
-		movements.add("left");
-		movements.add("left");
-		movements.add("up");
-		movements.add("left");
-		movements.add("down");
-		movements.add("left");
+	
+//		this.connectGraph();
+//		this.calcHCost();
+//		//this.printMap();
+//		movements = this.aStar();
+		
+		MapPanelController.connectGraph();
+		MapPanelController.calcHCost();
+		//MapPanelController.printMap();
+		movements = MapPanelController.aStar();
 	}
 
 	public void paintComponent(Graphics g) {

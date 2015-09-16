@@ -11,6 +11,7 @@ public class Graph {
 	private int cost;
 	private boolean visited;
 	private int f,g,h;
+	private Graph parent;
 	
 	public Graph(int cost, Point self) {
 		super();
@@ -19,6 +20,7 @@ public class Graph {
 	}
 	
 	public int getF() {
+		f = g + h;
 		return f;
 	}
 
