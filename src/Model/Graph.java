@@ -9,7 +9,7 @@ public class Graph {
 	private Graph lest;
 	private Graph west;
 	private int cost;
-	private boolean visited;
+	//private boolean visited;
 	private int f,g,h;
 	private Graph parent;
 	
@@ -80,11 +80,20 @@ public class Graph {
 	public void setCost(int cost) {
 		this.cost = cost;
 	}
-	public boolean isVisited() {
-		return visited;
+//	public boolean isVisited() {
+//		return visited;
+//	}
+//	public void setVisited(boolean visited) {
+//		this.visited = visited;
+//	}
+
+	public Graph getParent() {
+		return parent;
 	}
-	public void setVisited(boolean visited) {
-		this.visited = visited;
+
+	public void setParent(Graph parent) {
+		this.parent = parent;
 	}
+	
 
 }

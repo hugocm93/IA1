@@ -2,28 +2,30 @@ package Controller;
 
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import Model.BoardMap;
 import Model.Graph;
 
 public class MapPanelController {
-	
+
 	private static BoardMap boardMap;
-	
+
 	public MapPanelController() {
 		super();
-		
+
 		boardMap = new BoardMap();
 	}
 
 	public static int getIndexOfImage(int i, int j){
 		return boardMap.getMatrix()[i][j];
 	}
-	
+
 	public static Point getStart(){
 		return boardMap.getStart();
 	}
-	
+
 	public static void connectGraph() {
 		for(int j=0;j<Constants.mapSide;j++)
 			for(int i=0;i<Constants.mapSide;i++){
@@ -50,54 +52,68 @@ public class MapPanelController {
 
 					int h = 0;
 
+					//					if(x<0){
+					//						Graph var = aux;
+					//						for(int k=0 ; k<x*(-1);k++){
+					//							h += var.getWest().getCost();
+					//							aux2 = var;
+					//							var = var.getWest();
+					//						}
+					//					}
+					//					else if(x>0){
+					//						Graph var = aux;
+					//						for(int k=0 ; k<x;k++){
+					//							h += var.getLest().getCost();
+					//							aux2 = var;
+					//							var = var.getLest();
+					//						}
+					//					}
+					//					if(x==0){
+					//						aux2 = boardMap.getGraphMap().get(new Point(i,j));
+					//					}
+					//					aux =  aux2;
+					//
+					//					if(y<0){
+					//						Graph var = aux;
+					//						for(int k=0 ; k<y*(-1);k++){
+					//							h += var.getNorth().getCost();
+					//							var = var.getNorth();
+					//						}
+					//					}
+					//					else if(y>0){
+					//						Graph var = aux;
+					//						for(int k=0 ; k<y;k++){			
+					//							h += var.getSouth().getCost();
+					//							var = var.getSouth();
+					//						}
+					//					}
 					if(x<0){
-						Graph var = aux;
-						for(int k=0 ; k<x*(-1);k++){
-							h += var.getWest().getCost();
-							aux2 = var;
-							var = var.getWest();
-						}
+						x *= -1;
 					}
-					else if(x>0){
-						Graph var = aux;
-						for(int k=0 ; k<x;k++){
-							h += var.getLest().getCost();
-							aux2 = var;
-							var = var.getLest();
-						}
-					}
-					if(x==0){
-						aux2 = boardMap.getGraphMap().get(new Point(i,j));
-					}
-					aux =  aux2;
-
 					if(y<0){
-						Graph var = aux;
-						for(int k=0 ; k<y*(-1);k++){
-							h += var.getNorth().getCost();
-							var = var.getNorth();
-						}
+						y *= -1;
 					}
-					else if(y>0){
-						Graph var = aux;
-						for(int k=0 ; k<y;k++){			
-							h += var.getSouth().getCost();
-							var = var.getSouth();
-						}
+					h = x+y;					if(x<0){
+						x *= -1;
 					}
+					if(y<0){
+						y *= -1;
+					}
+					h = x+y;
 					boardMap.getGraphMap().get(new Point(i,j)).setH(h);
+
 
 				}
 			}
 	}
 
 	public static void printMap(){
-		Graph nextl = boardMap.getGraphMap().get(new Point(0,0)).getLest();
+		Graph nextl = boardMap.getGraphMap().get(new Point(0,0));
 		while(nextl != null){
 			Graph previous = null;
 			while(nextl != null){
-				System.out.printf("%d ",nextl.getCost());
-				//System.out.printf("%d ",nextl.getH());
+				//System.out.printf("%d ",nextl.getCost());
+				System.out.printf("%2d ",nextl.getH());
 				previous = nextl;
 				nextl = nextl.getLest();
 
@@ -115,18 +131,156 @@ public class MapPanelController {
 			nextl = previous;
 		}
 	}
-	
+
 	public static ArrayList<String> aStar() {
-		ArrayList<String> movements = new ArrayList<String>();
-		movements.add("left");
-		movements.add("left");
-		movements.add("up");
-		movements.add("left");
-		movements.add("down");
-		movements.add("left");
-		
-		
+		ArrayList<Graph> openList = new ArrayList<Graph>();
+		ArrayList<Graph> closedList = new ArrayList<Graph>();
+		Graph current = null;
+		Graph start = boardMap.getGraphMap().get(boardMap.getStart());
+		Graph end = boardMap.getGraphMap().get(boardMap.getEnd());
+
+
+		current = start;
+		MapPanelController.aStarAlgorithm(openList, closedList, start, end, current);
+
+		ArrayList<String> movements = MapPanelController.getListOfMovements(start, end);
+
+//		movements= new ArrayList<String>();
+//		movements.add("left");
+//		movements.add("left");
+//		movements.add("up");
+//		movements.add("left");
+//		movements.add("down");
+//		movements.add("left");
+
 		return movements;
+	}
+
+	private static ArrayList<String> getListOfMovements(Graph start, Graph end) {
+		ArrayList<String> movements = new ArrayList<String>();
+		
+		while(end != start){
+			System.out.println(end);
+			if(end.getLest().equals(end.getParent())){
+				movements.add("left");
+				end = end.getLest();
+			}
+			if(end.getNorth().equals(end.getParent())){
+				movements.add("down");
+				end = end.getNorth();
+			}
+			if(end.getSouth().equals(end.getParent())){
+				movements.add("up");
+				end = end.getSouth();
+			}
+			if(end.getWest().equals(end.getParent())){
+				movements.add("right");
+				end = end.getWest();
+			}
+		}
+		
+		Collections.reverse(movements);
+		return movements;
+	}
+
+	private static void aStarAlgorithm(ArrayList<Graph> openList, ArrayList<Graph> closedList, Graph start, Graph end, Graph current) {
+		if(current==null){
+			current = start;
+			current.setParent(null);
+		}
+		if(current != null && current.getH() == 0){
+			System.out.println("Finished executing A* search algorithm");
+			return;
+		}
+		closedList.add(current);
+
+
+		if(current.getLest() != null){
+			if(!closedList.contains(current.getLest())){
+				if(!openList.contains(current.getLest())){
+					openList.add(current.getLest());
+				}
+				if((current.getG() + current.getLest().getCost() ) < current.getLest().getG() && (current.getLest().getG()!=0)){
+					current.getLest().setParent(current);
+					current.getLest().setG(current.getG() + current.getLest().getCost());
+				}
+				else{
+					current.getLest().setParent(current);
+					current.getLest().setG(current.getG() + current.getLest().getCost());
+				}
+			}
+		}
+		
+		if(current.getNorth() != null){
+			if(!closedList.contains(current.getNorth())){
+				if(!openList.contains(current.getNorth())){
+					openList.add(current.getNorth());
+				}
+				if((current.getG() + current.getNorth().getCost() ) < current.getNorth().getG() && (current.getNorth().getG()!=0)){
+					current.getNorth().setParent(current);
+					current.getNorth().setG(current.getG() + current.getNorth().getCost());
+				}
+				else{
+					current.getNorth().setParent(current);
+					current.getNorth().setG(current.getG() + current.getNorth().getCost());
+				}
+			}
+		}
+		
+		if(current.getSouth() != null){
+			if(!closedList.contains(current.getSouth())){
+				if(!openList.contains(current.getSouth())){
+					openList.add(current.getSouth());
+				}
+				if((current.getG() + current.getSouth().getCost() ) < current.getSouth().getG() && (current.getSouth().getG()!=0)){
+					current.getSouth().setParent(current);
+					current.getSouth().setG(current.getG() + current.getSouth().getCost());
+				}
+				else{
+					current.getSouth().setParent(current);
+					current.getSouth().setG(current.getG() + current.getSouth().getCost());
+				}
+			}
+		}
+		
+		if(current.getWest() != null){
+			if(!closedList.contains(current.getWest())){
+				if(!openList.contains(current.getWest())){
+					openList.add(current.getWest());
+				}
+				if((current.getG() + current.getWest().getCost() ) < current.getWest().getG() && (current.getWest().getG()!=0)){
+					current.getWest().setParent(current);
+					current.getWest().setG(current.getG() + current.getWest().getCost());
+				}
+				else{
+					current.getWest().setParent(current);
+					current.getWest().setG(current.getG() + current.getWest().getCost());
+				}
+			}
+		}
+		
+
+		Collections.sort(openList, new Comparator<Graph>() {
+
+			@Override
+			public int compare(Graph arg0, Graph arg1) {
+				if(arg0.getF()<arg1.getF()){
+					return -1;
+				}
+				else if(arg0.getF() == arg1.getF()){
+					return 0;
+				}
+				else
+					return 0;
+			}
+
+		});
+
+		Graph aux = openList.remove(0);
+		
+		MapPanelController.aStarAlgorithm(openList, closedList, start, end, aux);
+
+
 	}
 
 }

@@ -7,7 +7,7 @@ import Interface.Scroll;
 
 public class Flow {
 	
-	public static  JFrame window;
+	public static  Scroll window;
 	public static  MapPanel mapPanel;
 	
 	public static void createWindow(){
@@ -28,5 +28,10 @@ public class Flow {
 		
 		window.setSize(Constants.widthDefault, Constants.heightDefault);
 		window.addKeyListener(mapPanel);
+	}
+	
+	public static void scrollUp(){
+		window.getScroll().getVerticalScrollBar().setValue(window.getScroll().getVerticalScrollBar().getMinimum());
+		window.getScroll().getVerticalScrollBar().setValue(window.getScroll().getVerticalScrollBar().getMinimum());
 	}
 }

@@ -58,15 +58,9 @@ public class MapPanel extends Adapter{
 		startButton.addMouseListener(this);
 		this.add(startButton);
 
-	
-//		this.connectGraph();
-//		this.calcHCost();
-//		//this.printMap();
-//		movements = this.aStar();
-		
 		MapPanelController.connectGraph();
 		MapPanelController.calcHCost();
-		//MapPanelController.printMap();
+		MapPanelController.printMap();
 		movements = MapPanelController.aStar();
 	}
 

@@ -56,7 +56,7 @@ public class BoardMap {
 						graphMap.put(new Point(i, j), new Graph(rock, new Point(i,j)));
 					}
 					if(matrix[i][j]==3 || matrix[i][j]==4 || matrix[i][j]==5){
-						graphMap.put(new Point(i, j), new Graph(0, new Point(i,j)));
+						graphMap.put(new Point(i, j), new Graph(1, new Point(i,j)));
 					}
 				}
 			}

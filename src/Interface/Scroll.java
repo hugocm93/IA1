@@ -8,11 +8,12 @@ import javax.swing.JScrollPane;
 public class Scroll extends JFrame{
 
 	private static final long serialVersionUID = 1L;
+	final JScrollPane scroll;
 
 	public Scroll(MapPanel map, String name) throws HeadlessException {
 		super(name);
 	
-	        final JScrollPane scroll = new JScrollPane(map, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+	       scroll = new JScrollPane(map, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 	        scroll.setVisible(true);
 	        scroll.getVerticalScrollBar().setValue(scroll.getVerticalScrollBar().getMaximum());
 	        scroll.getVerticalScrollBar().setValue(scroll.getVerticalScrollBar().getMaximum());
@@ -21,4 +22,10 @@ public class Scroll extends JFrame{
 	        this.add(scroll, BorderLayout.CENTER);
 	        
 	}
+
+	public JScrollPane getScroll() {
+		return scroll;
+	}
+	
+	
 }
