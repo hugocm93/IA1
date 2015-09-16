@@ -27,7 +27,7 @@ public class BoardMap {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		
+
 		in2.next("Rock");
 		int rock = in2.nextInt();
 		in2.next("Plain");
@@ -35,40 +35,42 @@ public class BoardMap {
 		in2.next("Mountain");
 		int mountain = in2.nextInt();
 
+		for(int j=0;j<Constants.mapSide;j++)
+			for(int i=0;i<Constants.mapSide;i++){
+				{
+					matrix[i][j] = in.nextInt();
 
-		for(int i=0;i<Constants.mapSide;i++){
-			for(int j=0;j<Constants.mapSide;j++){
-				matrix[i][j] = in.nextInt();
-
-				if(matrix[i][j] == 5){
-					start = new Point(i,j);
-				}
-				if(matrix[i][j] == 4){
-					end = new Point(i,j);
-				}
-				if(matrix[i][j]==0){
-					graphMap.put(new Point(i, j), new Graph(mountain,new Point(i,j)));
-				}
-				if(matrix[i][j]==1){
-					graphMap.put(new Point(i, j), new Graph(plain,new Point(i,j)));
-				}
-				if(matrix[i][j]==2){
-					graphMap.put(new Point(i, j), new Graph(rock, new Point(i,j)));
-				}
-				if(matrix[i][j]==3 || matrix[i][j]==4 || matrix[i][j]==5){
-					graphMap.put(new Point(i, j), new Graph(0, new Point(i,j)));
+					if(matrix[i][j] == 5){
+						start = new Point(i,j);
+					}
+					if(matrix[i][j] == 4){
+						end = new Point(i,j);
+					}
+					if(matrix[i][j]==0){
+						graphMap.put(new Point(i, j), new Graph(mountain,new Point(i,j)));
+					}
+					if(matrix[i][j]==1){
+						graphMap.put(new Point(i, j), new Graph(plain,new Point(i,j)));
+					}
+					if(matrix[i][j]==2){
+						graphMap.put(new Point(i, j), new Graph(rock, new Point(i,j)));
+					}
+					if(matrix[i][j]==3 || matrix[i][j]==4 || matrix[i][j]==5){
+						graphMap.put(new Point(i, j), new Graph(0, new Point(i,j)));
+					}
 				}
 			}
-		}
 
 		this.connectGraph();
 		//this.printMap();
+		this.calcHCost();
+
 	}
 
 	public int[][] getMatrix() {
 		return matrix;
 	}	
-	
+
 	public Point getStart(){
 		return start;
 	}
@@ -80,18 +82,64 @@ public class BoardMap {
 	public void setEnd(Point end) {
 		this.end = end;
 	}
-	
-	private void connectGraph() {
-		for(int i=0;i<Constants.mapSide;i++){
-			for(int j=0;j<Constants.mapSide;j++){
-				Graph aux = graphMap.get(new Point(i,j));
 
-				aux.setNorth(graphMap.get(new Point(i-1,j)));
-				aux.setSouth(graphMap.get(new Point(i+1,j)));
-				aux.setLest(graphMap.get(new Point(i,j+1)));
-				aux.setWest(graphMap.get(new Point(i,j-1)));
+	private void connectGraph() {
+		for(int j=0;j<Constants.mapSide;j++)
+			for(int i=0;i<Constants.mapSide;i++){
+				{
+					Graph aux = graphMap.get(new Point(i,j));
+
+					aux.setNorth(graphMap.get(new Point(i,j-1)));
+					aux.setSouth(graphMap.get(new Point(i,j+1)));
+					aux.setLest(graphMap.get(new Point(i+1,j)));
+					aux.setWest(graphMap.get(new Point(i-1,j)));
+				}
 			}
-		}
+	}
+
+	private void calcHCost() {
+		for(int j=0;j<Constants.mapSide;j++)
+			for(int i=0;i<Constants.mapSide;i++){
+				{
+					Graph aux = graphMap.get(new Point(i,j));
+
+					int x = end.x - i;
+					int y = end.y - j;
+					int h = 0;
+
+					if(y<0){
+						for(int k=0 ; k<x*(-1);k++){
+							Graph var = aux;
+							h += var.getNorth().getCost();
+							var = var.getNorth();
+						}
+					}
+					else if(y>0){
+						for(int k=0 ; k<x;k++){
+							Graph var = aux;
+							h += var.getSouth().getCost();
+							var = var.getSouth();
+						}
+					}
+
+					if(x<0){
+						for(int k=0 ; k<x*(-1);k++){
+							Graph var = aux;
+							h += var.getWest().getCost();
+							var = var.getWest();
+						}
+					}
+					else if(x>0){
+						for(int k=0 ; k<x;k++){
+							Graph var = aux;
+							h += var.getLest().getCost();
+							var = var.getLest();
+						}
+					}
+
+					aux.setH(h);
+				}
+			}
 	}
 
 	public void printMap(){

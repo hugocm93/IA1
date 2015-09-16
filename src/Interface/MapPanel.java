@@ -72,7 +72,7 @@ public class MapPanel extends Adapter{
 
 		for(int i=0;i<42;i++){
 			for(int k=0;k<42;k++){
-				g.drawImage(tilesImg[MapPanelController.getIndexOfImage(i, k)], Constants.squareSize*k, Constants.squareSize*i, Constants.squareSize, Constants.squareSize, null);
+				g.drawImage(tilesImg[MapPanelController.getIndexOfImage(k, i)], Constants.squareSize*k, Constants.squareSize*i, Constants.squareSize, Constants.squareSize, null);
 			}
 		}
 		
