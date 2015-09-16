@@ -102,38 +102,46 @@ public class BoardMap {
 			for(int i=0;i<Constants.mapSide;i++){
 				{
 					Graph aux = graphMap.get(new Point(i,j));
+					Graph aux2 = null;
 
 					int x = end.x - i;
 					int y = end.y - j;
+
 					int h = 0;
 
-					if(y<0){
+					if(x<0){
+						Graph var = aux;
 						for(int k=0 ; k<x*(-1);k++){
-							Graph var = aux;
+							h += var.getWest().getCost();
+							aux2 = var;
+							var = var.getWest();
+						}
+					}
+					else if(x>0){
+						Graph var = aux;
+						for(int k=0 ; k<x;k++){
+							h += var.getLest().getCost();
+							aux2 = var;
+							var = var.getLest();
+						}
+					}
+					if(x==0){
+						aux2 = graphMap.get(new Point(i,j));
+					}
+					aux =  aux2;
+
+					if(y<0){
+						Graph var = aux;
+						for(int k=0 ; k<y*(-1);k++){
 							h += var.getNorth().getCost();
 							var = var.getNorth();
 						}
 					}
 					else if(y>0){
-						for(int k=0 ; k<x;k++){
-							Graph var = aux;
+						Graph var = aux;
+						for(int k=0 ; k<y;k++){			
 							h += var.getSouth().getCost();
 							var = var.getSouth();
-						}
-					}
-
-					if(x<0){
-						for(int k=0 ; k<x*(-1);k++){
-							Graph var = aux;
-							h += var.getWest().getCost();
-							var = var.getWest();
-						}
-					}
-					else if(x>0){
-						for(int k=0 ; k<x;k++){
-							Graph var = aux;
-							h += var.getLest().getCost();
-							var = var.getLest();
 						}
 					}
 
