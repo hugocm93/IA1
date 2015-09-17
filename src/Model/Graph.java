@@ -9,7 +9,6 @@ public class Graph {
 	private Graph lest;
 	private Graph west;
 	private int cost;
-	//private boolean visited;
 	private int f,g,h;
 	private Graph parent;
 	private int numberOfSteps;
