@@ -193,6 +193,7 @@ public class MapPanelController {
 			return;
 		}
 		closedList.add(current);
+		
 
 
 		if(current.getLest() != null){
@@ -259,6 +260,11 @@ public class MapPanelController {
 			}
 		}
 		
+		current.getLest().setNumberOfSteps(current.getNumberOfSteps()+1);
+		current.getSouth().setNumberOfSteps(current.getNumberOfSteps()+1);
+		current.getWest().setNumberOfSteps(current.getNumberOfSteps()+1);
+		current.getNorth().setNumberOfSteps(current.getNumberOfSteps()+1);
+		
 
 		Collections.sort(openList, new Comparator<Graph>() {
 
@@ -268,7 +274,16 @@ public class MapPanelController {
 					return -1;
 				}
 				else if(arg0.getF() == arg1.getF()){
-					return 0;
+					if(arg0.getNumberOfSteps() < arg1.getNumberOfSteps()){
+						return -1;
+					}
+					else if(arg0.getNumberOfSteps() == arg1.getNumberOfSteps()){
+						return 0;
+					}
+					else{
+						return 1;
+					}
+					
 				}
 				else
 					return 1;

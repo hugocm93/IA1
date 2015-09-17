@@ -12,6 +12,7 @@ public class Graph {
 	//private boolean visited;
 	private int f,g,h;
 	private Graph parent;
+	private int numberOfSteps;
 	
 	public Graph(int cost, Point self) {
 		super();
@@ -19,6 +20,17 @@ public class Graph {
 		this.self = self;
 	}
 	
+	
+	public int getNumberOfSteps() {
+		return numberOfSteps;
+	}
+
+
+	public void setNumberOfSteps(int numberOfSteps) {
+		this.numberOfSteps = numberOfSteps;
+	}
+
+
 	public int getF() {
 		f = g + h;
 		return f;
