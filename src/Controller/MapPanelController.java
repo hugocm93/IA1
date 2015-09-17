@@ -43,67 +43,20 @@ public class MapPanelController {
 	public static void calcHCost() {
 		for(int j=0;j<Constants.mapSide;j++)
 			for(int i=0;i<Constants.mapSide;i++){
-				{
-					Graph aux = boardMap.getGraphMap().get(new Point(i,j));
-					Graph aux2 = null;
+				int x = boardMap.getEnd().x - i;
+				int y = boardMap.getEnd().y - j;
 
-					int x = boardMap.getEnd().x - i;
-					int y = boardMap.getEnd().y - j;
+				int h = 0;
 
-					int h = 0;
-
-					//					if(x<0){
-					//						Graph var = aux;
-					//						for(int k=0 ; k<x*(-1);k++){
-					//							h += var.getWest().getCost();
-					//							aux2 = var;
-					//							var = var.getWest();
-					//						}
-					//					}
-					//					else if(x>0){
-					//						Graph var = aux;
-					//						for(int k=0 ; k<x;k++){
-					//							h += var.getLest().getCost();
-					//							aux2 = var;
-					//							var = var.getLest();
-					//						}
-					//					}
-					//					if(x==0){
-					//						aux2 = boardMap.getGraphMap().get(new Point(i,j));
-					//					}
-					//					aux =  aux2;
-					//
-					//					if(y<0){
-					//						Graph var = aux;
-					//						for(int k=0 ; k<y*(-1);k++){
-					//							h += var.getNorth().getCost();
-					//							var = var.getNorth();
-					//						}
-					//					}
-					//					else if(y>0){
-					//						Graph var = aux;
-					//						for(int k=0 ; k<y;k++){			
-					//							h += var.getSouth().getCost();
-					//							var = var.getSouth();
-					//						}
-					//					}
-					if(x<0){
-						x *= -1;
-					}
-					if(y<0){
-						y *= -1;
-					}
-					h = x+y;					if(x<0){
-						x *= -1;
-					}
-					if(y<0){
-						y *= -1;
-					}
-					h = x+y;
-					boardMap.getGraphMap().get(new Point(i,j)).setH(h);
-
-
+				if(x<0){
+					x *= -1;
 				}
+				if(y<0){
+					y *= -1;
+				}
+
+				h = x+y;
+				boardMap.getGraphMap().get(new Point(i,j)).setH(h);
 			}
 	}
 
@@ -139,26 +92,15 @@ public class MapPanelController {
 		Graph start = boardMap.getGraphMap().get(boardMap.getStart());
 		Graph end = boardMap.getGraphMap().get(boardMap.getEnd());
 
-
 		current = start;
 		MapPanelController.aStarAlgorithm(openList, closedList, start, end, current);
 
-		ArrayList<String> movements = MapPanelController.getListOfMovements(start, end);
-
-//		movements= new ArrayList<String>();
-//		movements.add("left");
-//		movements.add("left");
-//		movements.add("up");
-//		movements.add("left");
-//		movements.add("down");
-//		movements.add("left");
-
-		return movements;
+		return MapPanelController.getListOfMovements(start, end);
 	}
 
 	private static ArrayList<String> getListOfMovements(Graph start, Graph end) {
 		ArrayList<String> movements = new ArrayList<String>();
-		
+
 		while(end != start){
 			System.out.println(end);
 			if(end.getLest().equals(end.getParent())){
@@ -178,7 +120,7 @@ public class MapPanelController {
 				end = end.getWest();
 			}
 		}
-		
+
 		Collections.reverse(movements);
 		return movements;
 	}
@@ -193,7 +135,6 @@ public class MapPanelController {
 			return;
 		}
 		closedList.add(current);
-		
 
 
 		if(current.getLest() != null){
@@ -201,70 +142,56 @@ public class MapPanelController {
 				if(!openList.contains(current.getLest())){
 					openList.add(current.getLest());
 				}
-				if((current.getG() + current.getLest().getCost() ) < current.getLest().getG() && (current.getLest().getG()!=0)){
+				if((current.getG() + current.getLest().getCost() ) < current.getLest().getG() && (current.getLest().getG()!=0) || (current.getLest().getG()==0)){
 					current.getLest().setParent(current);
 					current.getLest().setG(current.getG() + current.getLest().getCost());
 				}
-				else{
-					current.getLest().setParent(current);
-					current.getLest().setG(current.getG() + current.getLest().getCost());
-				}
+				
+				current.getLest().setNumberOfSteps(current.getNumberOfSteps() + 1);
 			}
 		}
-		
+
 		if(current.getNorth() != null){
 			if(!closedList.contains(current.getNorth())){
 				if(!openList.contains(current.getNorth())){
 					openList.add(current.getNorth());
 				}
-				if((current.getG() + current.getNorth().getCost() ) < current.getNorth().getG() && (current.getNorth().getG()!=0)){
+				if((current.getG() + current.getNorth().getCost() ) < current.getNorth().getG() && (current.getNorth().getG()!=0) || (current.getNorth().getG()==0)){
 					current.getNorth().setParent(current);
 					current.getNorth().setG(current.getG() + current.getNorth().getCost());
 				}
-				else{
-					current.getNorth().setParent(current);
-					current.getNorth().setG(current.getG() + current.getNorth().getCost());
-				}
+		
+				current.getNorth().setNumberOfSteps(current.getNumberOfSteps() + 1);
 			}
 		}
-		
+
 		if(current.getSouth() != null){
 			if(!closedList.contains(current.getSouth())){
 				if(!openList.contains(current.getSouth())){
 					openList.add(current.getSouth());
 				}
-				if((current.getG() + current.getSouth().getCost() ) < current.getSouth().getG() && (current.getSouth().getG()!=0)){
+				if((current.getG() + current.getSouth().getCost() ) < current.getSouth().getG() && (current.getSouth().getG()!=0) || (current.getSouth().getG()==0)){
 					current.getSouth().setParent(current);
 					current.getSouth().setG(current.getG() + current.getSouth().getCost());
 				}
-				else{
-					current.getSouth().setParent(current);
-					current.getSouth().setG(current.getG() + current.getSouth().getCost());
-				}
+				
+				current.getSouth().setNumberOfSteps(current.getNumberOfSteps() + 1);
 			}
 		}
-		
+
 		if(current.getWest() != null){
 			if(!closedList.contains(current.getWest())){
 				if(!openList.contains(current.getWest())){
 					openList.add(current.getWest());
 				}
-				if((current.getG() + current.getWest().getCost() ) < current.getWest().getG() && (current.getWest().getG()!=0)){
+				if((current.getG() + current.getWest().getCost() ) < current.getWest().getG() && (current.getWest().getG()!=0) || (current.getWest().getG()==0)){
 					current.getWest().setParent(current);
 					current.getWest().setG(current.getG() + current.getWest().getCost());
 				}
-				else{
-					current.getWest().setParent(current);
-					current.getWest().setG(current.getG() + current.getWest().getCost());
-				}
+				
+				current.getWest().setNumberOfSteps(current.getNumberOfSteps() + 1);
 			}
 		}
-		
-		current.getLest().setNumberOfSteps(current.getNumberOfSteps()+1);
-		current.getSouth().setNumberOfSteps(current.getNumberOfSteps()+1);
-		current.getWest().setNumberOfSteps(current.getNumberOfSteps()+1);
-		current.getNorth().setNumberOfSteps(current.getNumberOfSteps()+1);
-		
 
 		Collections.sort(openList, new Comparator<Graph>() {
 
@@ -283,7 +210,7 @@ public class MapPanelController {
 					else{
 						return 1;
 					}
-					
+
 				}
 				else
 					return 1;
@@ -292,7 +219,7 @@ public class MapPanelController {
 		});
 
 		Graph aux = openList.remove(0);
-		
+
 		MapPanelController.aStarAlgorithm(openList, closedList, start, end, aux);
 
 
