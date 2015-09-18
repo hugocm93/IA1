@@ -146,6 +146,9 @@ public class MapPanelController {
 					current.getLest().setParent(current);
 					current.getLest().setG(current.getG() + current.getLest().getCost());
 				}
+				if(current.getG() + current.getLest().getCost() == current.getLest().getG() && (current.getLest().getG()!=0) && current.getNumberOfSteps() + 1 < current.getLest().getNumberOfSteps()){
+					current.getLest().setParent(current);
+				}
 				
 				current.getLest().setNumberOfSteps(current.getNumberOfSteps() + 1);
 			}
@@ -159,6 +162,9 @@ public class MapPanelController {
 				if((current.getG() + current.getNorth().getCost() ) < current.getNorth().getG() && (current.getNorth().getG()!=0) || (current.getNorth().getG()==0)){
 					current.getNorth().setParent(current);
 					current.getNorth().setG(current.getG() + current.getNorth().getCost());
+				}
+				if(current.getG() + current.getNorth().getCost() == current.getNorth().getG() && (current.getNorth().getG()!=0) && current.getNumberOfSteps() + 1 < current.getNorth().getNumberOfSteps()){
+					current.getNorth().setParent(current);
 				}
 		
 				current.getNorth().setNumberOfSteps(current.getNumberOfSteps() + 1);
@@ -174,6 +180,10 @@ public class MapPanelController {
 					current.getSouth().setParent(current);
 					current.getSouth().setG(current.getG() + current.getSouth().getCost());
 				}
+				if(current.getG() + current.getSouth().getCost() == current.getSouth().getG() && (current.getSouth().getG()!=0) && current.getNumberOfSteps() + 1 < current.getSouth().getNumberOfSteps()){
+					current.getSouth().setParent(current);
+				}
+				
 				
 				current.getSouth().setNumberOfSteps(current.getNumberOfSteps() + 1);
 			}
@@ -187,6 +197,9 @@ public class MapPanelController {
 				if((current.getG() + current.getWest().getCost() ) < current.getWest().getG() && (current.getWest().getG()!=0) || (current.getWest().getG()==0)){
 					current.getWest().setParent(current);
 					current.getWest().setG(current.getG() + current.getWest().getCost());
+				}
+				if(current.getG() + current.getWest().getCost() == current.getWest().getG() && (current.getWest().getG()!=0) && current.getNumberOfSteps() + 1 < current.getWest().getNumberOfSteps()){
+					current.getWest().setParent(current);
 				}
 				
 				current.getWest().setNumberOfSteps(current.getNumberOfSteps() + 1);
