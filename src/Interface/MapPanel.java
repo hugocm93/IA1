@@ -200,7 +200,7 @@ public class MapPanel extends Adapter{
 				if(aux == "down"){
 					this.walkDown(0);
 				}
-				int aux2 = MapPanelController.getCosts().remove(0).intValue() + Integer.parseInt(costs.getText());
+				float aux2 = MapPanelController.getCosts().remove(0).floatValue() + Float.parseFloat(costs.getText());
 				costs.setText(String.valueOf(aux2));
 				this.paintImmediately(costs.getBounds());
 			}

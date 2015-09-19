@@ -65,40 +65,40 @@ public class BoardMap {
 						graphMap.put(new Point(i, j), new Graph(0, new Point(i,j)));
 					}
 					if(matrix[i][j]==31){
-						graphMap.put(new Point(i, j), new Graph((int)houses[0].getCost(), new Point(i,j)));
+						graphMap.put(new Point(i, j), new Graph(houses[0].getCost(), new Point(i,j)));
 					}
 					if(matrix[i][j]==32){
-						graphMap.put(new Point(i, j), new Graph((int)houses[1].getCost(), new Point(i,j)));
+						graphMap.put(new Point(i, j), new Graph(houses[1].getCost(), new Point(i,j)));
 					}
 					if(matrix[i][j]==33){
-						graphMap.put(new Point(i, j), new Graph((int)houses[2].getCost(), new Point(i,j)));
+						graphMap.put(new Point(i, j), new Graph(houses[2].getCost(), new Point(i,j)));
 					}
 					if(matrix[i][j]==34){
-						graphMap.put(new Point(i, j), new Graph((int)houses[3].getCost(), new Point(i,j)));
+						graphMap.put(new Point(i, j), new Graph(houses[3].getCost(), new Point(i,j)));
 					}
 					if(matrix[i][j]==35){
-						graphMap.put(new Point(i, j), new Graph((int)houses[4].getCost(), new Point(i,j)));
+						graphMap.put(new Point(i, j), new Graph(houses[4].getCost(), new Point(i,j)));
 					}
 					if(matrix[i][j]==36){
-						graphMap.put(new Point(i, j), new Graph((int)houses[5].getCost(), new Point(i,j)));
+						graphMap.put(new Point(i, j), new Graph(houses[5].getCost(), new Point(i,j)));
 					}
 					if(matrix[i][j]==37){
-						graphMap.put(new Point(i, j), new Graph((int)houses[6].getCost(), new Point(i,j)));
+						graphMap.put(new Point(i, j), new Graph(houses[6].getCost(), new Point(i,j)));
 					}
 					if(matrix[i][j]==38){
-						graphMap.put(new Point(i, j), new Graph((int)houses[7].getCost(), new Point(i,j)));
+						graphMap.put(new Point(i, j), new Graph(houses[7].getCost(), new Point(i,j)));
 					}
 					if(matrix[i][j]==39){
-						graphMap.put(new Point(i, j), new Graph((int)houses[8].getCost(), new Point(i,j)));
+						graphMap.put(new Point(i, j), new Graph(houses[8].getCost(), new Point(i,j)));
 					}
 					if(matrix[i][j]==310){
-						graphMap.put(new Point(i, j), new Graph((int)houses[9].getCost(), new Point(i,j)));
+						graphMap.put(new Point(i, j), new Graph(houses[9].getCost(), new Point(i,j)));
 					}
 					if(matrix[i][j]==311){
-						graphMap.put(new Point(i, j), new Graph((int)houses[10].getCost(), new Point(i,j)));
+						graphMap.put(new Point(i, j), new Graph(houses[10].getCost(), new Point(i,j)));
 					}
 					if(matrix[i][j]==312){
-						graphMap.put(new Point(i, j), new Graph((int)houses[11].getCost(), new Point(i,j)));
+						graphMap.put(new Point(i, j), new Graph(houses[11].getCost(), new Point(i,j)));
 					}
 				}
 			}
