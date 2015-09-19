@@ -18,14 +18,14 @@ public class BoardMap {
 	private Time time = new Time(0, 12*60);
 
 	public BoardMap(){
-		
+
 		graphMap = new HashMap<Point, Graph>();
 
 		try {
 			in = new Scanner(new FileReader(path1 + path2 + "Map.txt"));
 			in2 = new Scanner(new FileReader(path1 + path2 + "Terrains.txt"));
 			in3 = new Scanner(new FileReader(path1 + path2 + "Houses.txt"));
-			in3 = new Scanner(new FileReader(path1 + path2 + "Knights.txt"));
+			in4 = new Scanner(new FileReader(path1 + path2 + "Knights.txt"));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -36,7 +36,7 @@ public class BoardMap {
 		int plain = in2.nextInt();
 		in2.next("Mountain");
 		int mountain = in2.nextInt();
-		
+
 		this.calcBattles();
 
 		for(int j=0;j<Constants.mapSide;j++)
@@ -71,64 +71,118 @@ public class BoardMap {
 		House houses[] = new House[12];
 		Float knights[] = new Float[5];
 		Integer battling[] = new Integer[]{new Integer(1),new Integer(1),new Integer(1),new Integer(1),new Integer(1)};
-		
+
 		in3.next("Aries");
 		houses[0] =new House(in3.nextInt());
-		
+
 		in3.next("Touro");
 		houses[1] =new House(in3.nextInt());
-		
+
 		in3.next("Gemeos");
 		houses[2] =new House(in3.nextInt());
-		
+
 		in3.next("Cancer");
 		houses[3] =new House(in3.nextInt());
-		
+
 		in3.next("Leao");
 		houses[4] =new House(in3.nextInt());
-		
+
 		in3.next("Virgem");
 		houses[5] =new House(in3.nextInt());
-		
+
 		in3.next("Libra");
 		houses[6] =new House(in3.nextInt());
-		
+
 		in3.next("Escorpiao");
 		houses[7] =new House(in3.nextInt());
-		
+
 		in3.next("Sagitario");
 		houses[8] =new House(in3.nextInt());
-		
+
 		in3.next("Capricornio");
 		houses[9] =new House(in3.nextInt());
-		
+
 		in3.next("Aquario");
 		houses[10] =new House(in3.nextInt());
-		
+
 		in3.next("Peixes");
 		houses[11] =new House(in3.nextInt());
-		
+
 		in4.next("Seiya");
 		knights[0] = new Float(in4.nextFloat());
-		
+
 		in4.next("Shiryu");
 		knights[1] = new Float(in4.nextFloat());
-		
+
 		in4.next("Hyoga");
 		knights[2] = new Float(in4.nextFloat());
-		
+
 		in4.next("Shun");
 		knights[3] = new Float(in4.nextFloat());
-		
+
 		in4.next("Ikki");
 		knights[4] = new Float(in4.nextFloat());
-		
+
 		for(int i=0 ; i< 12 ; i++){
 			houses[i].setBattling(battling);
 			houses[i].setKnights(knights);
 		}
-		
-		
+
+		/////////////////////////////
+
+
+		for(int z=0;z<5; z++){
+			for(int w=0 ; w<7 ;w++){
+				House h[][] = new House[12][12];
+				System.out.println("xxx");
+				for(int i=0; i<12 ; i++){
+					h[i] = this.cloneHH(houses);
+				}
+
+				float min = Float.MAX_VALUE;
+				int minIndex = -1;
+
+				for(int j=0 ;j <12 ; j++){
+					if(h[j][j].getBattling()[z].intValue() == 0){
+						continue;
+					}
+					h[j][j].getBattling()[z] = new Integer(0);
+
+					float aux = 0;
+					for(int i = 0 ;i<12 ;i++){
+						aux += h[j][i].getCost();
+					}
+
+					System.out.println(aux);
+
+					if(aux<min){
+						min = aux;
+						minIndex = j;
+					}
+				}
+				houses = h[minIndex];
+			}
+		}
+
+		System.out.println(houses[0].getCost() + houses[1].getCost() + houses[2].getCost() + houses[3].getCost() + houses[4].getCost() + houses[5].getCost() + houses[6].getCost() + houses[7].getCost() + houses[8].getCost() + houses[9].getCost() + houses[10].getCost() + houses[11].getCost());
+
+		for(int p = 0 ; p<12 ; p++){
+			for(int y = 0 ; y<5 ; y++){
+				System.out.printf("%d ", houses[p].getBattling()[y].intValue());
+			}
+			System.out.println();
+		}
+
+	}
+
+	private House[] cloneHH(House h1[]){
+		House aux[] = new House[12];
+
+		for(int i=0;i<12;i++){
+			aux[i] = h1[i].cloneH();
+		}
+
+		return aux;
 	}
 
 
@@ -217,8 +271,8 @@ public class BoardMap {
 	public void setTime(Time time) {
 		this.time = time;
 	}
-	
-	
 
-	
+
+
+
 }
