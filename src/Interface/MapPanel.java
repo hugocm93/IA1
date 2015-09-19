@@ -35,6 +35,7 @@ public class MapPanel extends Adapter{
 	private BufferedImage players;
 	private BufferedImage player[][] = new BufferedImage[12][8];
 	private JLabel playerSprite[] = new JLabel[5]; 
+	private JLabel costs = new JLabel("0"); 
 	private JButton startButton;
 	private ArrayList<String> movements;
 
@@ -48,6 +49,8 @@ public class MapPanel extends Adapter{
 		this.add(playerSprite[0]);
 
 		playerSprite[0].setVisible(true);
+		costs.setVisible(true);
+		this.add(costs);
 		playerSprite[0].addKeyListener(this);
 
 		this.setFocusable(true);
@@ -80,7 +83,7 @@ public class MapPanel extends Adapter{
 		
 		playerSprite[0].setBounds(x, y, Constants.squareSize, Constants.squareSize);
 		startButton.setBounds(Constants.squareSize*Constants.mapSide, Constants.squareSize*Constants.mapSide-30, 80, 30);
-
+		costs.setBounds(Constants.squareSize*Constants.mapSide, Constants.squareSize*Constants.mapSide-600, 80, 30);
 		g.finalize();
 	}
 
@@ -114,28 +117,28 @@ public class MapPanel extends Adapter{
 		return dest; 
 	}
 
-	@Override
-	public void keyPressed(KeyEvent e) {
-		int code = e.getKeyCode();
-		System.out.println("A key was typed");
-
-		x = playerSprite[0].getBounds().x;
-		y = playerSprite[0].getBounds().y;
-
-		if (code == KeyEvent.VK_DOWN) {
-			this.walkDown(0);
-		}
-		if (code == KeyEvent.VK_UP) {
-			this.walkUp(0);
-		}
-		if (code == KeyEvent.VK_LEFT) {
-			this.walkLeft(0);
-		}
-		if (code == KeyEvent.VK_RIGHT) {
-			this.walkRight(0);
-		}
-
-	}
+//	@Override
+//	public void keyPressed(KeyEvent e) {
+//		int code = e.getKeyCode();
+//		System.out.println("A key was typed");
+//
+//		x = playerSprite[0].getBounds().x;
+//		y = playerSprite[0].getBounds().y;
+//
+//		if (code == KeyEvent.VK_DOWN) {
+//			this.walkDown(0);
+//		}
+//		if (code == KeyEvent.VK_UP) {
+//			this.walkUp(0);
+//		}
+//		if (code == KeyEvent.VK_LEFT) {
+//			this.walkLeft(0);
+//		}
+//		if (code == KeyEvent.VK_RIGHT) {
+//			this.walkRight(0);
+//		}
+//
+//	}
 
 	private void walkRight(int index){
 		for(int i=1;i<4;i++){
@@ -180,7 +183,7 @@ public class MapPanel extends Adapter{
 
 			while(ls.hasNext()){
 				String aux = ls.next();
-
+				
 				if(aux == "right"){
 					this.walkRight(0);
 				}
@@ -193,6 +196,9 @@ public class MapPanel extends Adapter{
 				if(aux == "down"){
 					this.walkDown(0);
 				}
+				int aux2 = MapPanelController.getCosts().remove(0).intValue() + Integer.parseInt(costs.getText());
+				costs.setText(String.valueOf(aux2));
+				this.paintImmediately(costs.getBounds());
 			}
 		}
 
@@ -201,7 +207,7 @@ public class MapPanel extends Adapter{
 	private void move(int index){
 		playerSprite[index].setLocation(x, y);
 		this.paintImmediately(new Rectangle(playerSprite[index].getBounds().x - playerSprite[index].getBounds().width, playerSprite[index].getBounds().y - playerSprite[index].getBounds().height, playerSprite[index].getBounds().width*3, playerSprite[index].getBounds().height*3));
-
+		
 		try {
 			Thread.sleep(100);
 		} catch (InterruptedException e1) {

@@ -15,6 +15,7 @@ public class BoardMap {
 	private Scanner in, in2;
 	private Point start, end ;
 	private HashMap<Point, Graph> graphMap;
+	private Time time = new Time(0, 12*60);
 
 	public BoardMap(){
 
@@ -138,6 +139,18 @@ public class BoardMap {
 	public void setStart(Point start) {
 		this.start = start;
 	}
+
+
+	public Time getTime() {
+		return time;
+	}
+
+
+	public void setTime(Time time) {
+		this.time = time;
+	}
+	
+	
 
 	
 }

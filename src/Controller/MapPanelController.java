@@ -102,26 +102,41 @@ public class MapPanelController {
 		ArrayList<String> movements = new ArrayList<String>();
 
 		while(end != start){
-			System.out.println(end);
+			//System.out.println(end);
+			
 			if(end.getLest().equals(end.getParent())){
 				movements.add("left");
+				boardMap.getTime().setElapsedTime(boardMap.getTime().getElapsedTime() + end.getLest().getCost());
+				boardMap.getTime().getCosts().add(new Integer(end.getLest().getCost()));
 				end = end.getLest();
 			}
 			if(end.getNorth().equals(end.getParent())){
 				movements.add("down");
+				boardMap.getTime().setElapsedTime(boardMap.getTime().getElapsedTime() + end.getNorth().getCost());
+				boardMap.getTime().getCosts().add(new Integer(end.getNorth().getCost()));
+			
 				end = end.getNorth();
 			}
 			if(end.getSouth().equals(end.getParent())){
 				movements.add("up");
+				
+				boardMap.getTime().setElapsedTime(boardMap.getTime().getElapsedTime() + end.getSouth().getCost());
+				boardMap.getTime().getCosts().add(new Integer(end.getSouth().getCost()));
+			
 				end = end.getSouth();
 			}
 			if(end.getWest().equals(end.getParent())){
 				movements.add("right");
+				
+				boardMap.getTime().setElapsedTime(boardMap.getTime().getElapsedTime() + end.getWest().getCost());
+				boardMap.getTime().getCosts().add(new Integer(end.getWest().getCost()));
+			
 				end = end.getWest();
 			}
 		}
 
 		Collections.reverse(movements);
+		Collections.reverse(boardMap.getTime().getCosts());
 		return movements;
 	}
 
@@ -236,6 +251,10 @@ public class MapPanelController {
 		MapPanelController.aStarAlgorithm(openList, closedList, start, end, aux);
 
 
+	}
+	
+	public static ArrayList<Integer> getCosts(){
+		return boardMap.getTime().getCosts();
 	}
 
 }

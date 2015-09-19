@@ -1,14 +1,23 @@
 package Model;
 
+import java.util.ArrayList;
+
 public class Time {
 	
 	private float elapsedTime;
-	private float timeRemaining;
+	private ArrayList<Integer> costs = new ArrayList<Integer>();
 	
+	public ArrayList<Integer> getCosts() {
+		return costs;
+	}
+
+	public void setCosts(ArrayList<Integer> costs) {
+		this.costs = costs;
+	}
+
 	public Time(float elapsedTime, float timeRemaining) {
 		super();
 		this.elapsedTime = elapsedTime;
-		this.timeRemaining = timeRemaining;
 	}
 
 	public float getElapsedTime() {
@@ -19,11 +28,7 @@ public class Time {
 		this.elapsedTime = elapsedTime;
 	}
 
-	public float getTimeRemaining() {
-		return timeRemaining;
-	}
+	
+	
 
-	public void setTimeRemaining(float timeRemaining) {
-		this.timeRemaining = timeRemaining;
-	}
 }
