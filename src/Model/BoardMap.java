@@ -12,19 +12,20 @@ public class BoardMap {
 	private int matrix[][] = new int[Constants.mapSide][Constants.mapSide];
 	private String path1 = System.getProperty("user.dir");
 	private String path2 = "/src/DataSource/";
-	private Scanner in, in2;
+	private Scanner in, in2, in3, in4;
 	private Point start, end ;
 	private HashMap<Point, Graph> graphMap;
 	private Time time = new Time(0, 12*60);
 
 	public BoardMap(){
-
+		
 		graphMap = new HashMap<Point, Graph>();
 
 		try {
 			in = new Scanner(new FileReader(path1 + path2 + "Map.txt"));
 			in2 = new Scanner(new FileReader(path1 + path2 + "Terrains.txt"));
-
+			in3 = new Scanner(new FileReader(path1 + path2 + "Houses.txt"));
+			in3 = new Scanner(new FileReader(path1 + path2 + "Knights.txt"));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -35,6 +36,8 @@ public class BoardMap {
 		int plain = in2.nextInt();
 		in2.next("Mountain");
 		int mountain = in2.nextInt();
+		
+		this.calcBattles();
 
 		for(int j=0;j<Constants.mapSide;j++)
 			for(int i=0;i<Constants.mapSide;i++){
@@ -61,6 +64,71 @@ public class BoardMap {
 					}
 				}
 			}
+	}
+
+
+	private void calcBattles() {
+		House houses[] = new House[12];
+		Float knights[] = new Float[5];
+		Integer battling[] = new Integer[]{new Integer(1),new Integer(1),new Integer(1),new Integer(1),new Integer(1)};
+		
+		in3.next("Aries");
+		houses[0] =new House(in3.nextInt());
+		
+		in3.next("Touro");
+		houses[1] =new House(in3.nextInt());
+		
+		in3.next("Gemeos");
+		houses[2] =new House(in3.nextInt());
+		
+		in3.next("Cancer");
+		houses[3] =new House(in3.nextInt());
+		
+		in3.next("Leao");
+		houses[4] =new House(in3.nextInt());
+		
+		in3.next("Virgem");
+		houses[5] =new House(in3.nextInt());
+		
+		in3.next("Libra");
+		houses[6] =new House(in3.nextInt());
+		
+		in3.next("Escorpiao");
+		houses[7] =new House(in3.nextInt());
+		
+		in3.next("Sagitario");
+		houses[8] =new House(in3.nextInt());
+		
+		in3.next("Capricornio");
+		houses[9] =new House(in3.nextInt());
+		
+		in3.next("Aquario");
+		houses[10] =new House(in3.nextInt());
+		
+		in3.next("Peixes");
+		houses[11] =new House(in3.nextInt());
+		
+		in4.next("Seiya");
+		knights[0] = new Float(in4.nextFloat());
+		
+		in4.next("Shiryu");
+		knights[1] = new Float(in4.nextFloat());
+		
+		in4.next("Hyoga");
+		knights[2] = new Float(in4.nextFloat());
+		
+		in4.next("Shun");
+		knights[3] = new Float(in4.nextFloat());
+		
+		in4.next("Ikki");
+		knights[4] = new Float(in4.nextFloat());
+		
+		for(int i=0 ; i< 12 ; i++){
+			houses[i].setBattling(battling);
+			houses[i].setKnights(knights);
+		}
+		
+		
 	}
 
 

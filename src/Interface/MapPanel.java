@@ -36,6 +36,7 @@ public class MapPanel extends Adapter{
 	private BufferedImage player[][] = new BufferedImage[12][8];
 	private JLabel playerSprite[] = new JLabel[5]; 
 	private JLabel costs = new JLabel("0"); 
+	private JLabel maxTime = new JLabel(String.valueOf(12*60));
 	private JButton startButton;
 	private ArrayList<String> movements;
 
@@ -50,7 +51,9 @@ public class MapPanel extends Adapter{
 
 		playerSprite[0].setVisible(true);
 		costs.setVisible(true);
+		maxTime.setVisible(true);
 		this.add(costs);
+		this.add(maxTime);
 		playerSprite[0].addKeyListener(this);
 
 		this.setFocusable(true);
@@ -84,6 +87,7 @@ public class MapPanel extends Adapter{
 		playerSprite[0].setBounds(x, y, Constants.squareSize, Constants.squareSize);
 		startButton.setBounds(Constants.squareSize*Constants.mapSide, Constants.squareSize*Constants.mapSide-30, 80, 30);
 		costs.setBounds(Constants.squareSize*Constants.mapSide, Constants.squareSize*Constants.mapSide-600, 80, 30);
+		maxTime.setBounds(Constants.squareSize*Constants.mapSide, Constants.squareSize*Constants.mapSide-570, 80, 30);
 		g.finalize();
 	}
 
