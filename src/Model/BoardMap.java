@@ -16,6 +16,7 @@ public class BoardMap {
 	private Point start, end ;
 	private HashMap<Point, Graph> graphMap;
 	private Time time = new Time(0, 12*60);
+	House houses[];
 
 	public BoardMap(){
 
@@ -39,6 +40,7 @@ public class BoardMap {
 
 		this.calcBattles();
 
+		
 		for(int j=0;j<Constants.mapSide;j++)
 			for(int i=0;i<Constants.mapSide;i++){
 				{
@@ -59,8 +61,44 @@ public class BoardMap {
 					if(matrix[i][j]==2){
 						graphMap.put(new Point(i, j), new Graph(rock, new Point(i,j)));
 					}
-					if(matrix[i][j]==3 || matrix[i][j]==4 || matrix[i][j]==5){
-						graphMap.put(new Point(i, j), new Graph(1, new Point(i,j)));
+					if(matrix[i][j]==4 || matrix[i][j]==5){
+						graphMap.put(new Point(i, j), new Graph(0, new Point(i,j)));
+					}
+					if(matrix[i][j]==31){
+						graphMap.put(new Point(i, j), new Graph((int)houses[0].getCost(), new Point(i,j)));
+					}
+					if(matrix[i][j]==32){
+						graphMap.put(new Point(i, j), new Graph((int)houses[1].getCost(), new Point(i,j)));
+					}
+					if(matrix[i][j]==33){
+						graphMap.put(new Point(i, j), new Graph((int)houses[2].getCost(), new Point(i,j)));
+					}
+					if(matrix[i][j]==34){
+						graphMap.put(new Point(i, j), new Graph((int)houses[3].getCost(), new Point(i,j)));
+					}
+					if(matrix[i][j]==35){
+						graphMap.put(new Point(i, j), new Graph((int)houses[4].getCost(), new Point(i,j)));
+					}
+					if(matrix[i][j]==36){
+						graphMap.put(new Point(i, j), new Graph((int)houses[5].getCost(), new Point(i,j)));
+					}
+					if(matrix[i][j]==37){
+						graphMap.put(new Point(i, j), new Graph((int)houses[6].getCost(), new Point(i,j)));
+					}
+					if(matrix[i][j]==38){
+						graphMap.put(new Point(i, j), new Graph((int)houses[7].getCost(), new Point(i,j)));
+					}
+					if(matrix[i][j]==39){
+						graphMap.put(new Point(i, j), new Graph((int)houses[8].getCost(), new Point(i,j)));
+					}
+					if(matrix[i][j]==310){
+						graphMap.put(new Point(i, j), new Graph((int)houses[9].getCost(), new Point(i,j)));
+					}
+					if(matrix[i][j]==311){
+						graphMap.put(new Point(i, j), new Graph((int)houses[10].getCost(), new Point(i,j)));
+					}
+					if(matrix[i][j]==312){
+						graphMap.put(new Point(i, j), new Graph((int)houses[11].getCost(), new Point(i,j)));
 					}
 				}
 			}
@@ -68,7 +106,8 @@ public class BoardMap {
 
 
 	private void calcBattles() {
-		House houses[] = new House[12];
+		
+		houses = new House[12];
 		Float knights[] = new Float[5];
 		Integer battling[] = new Integer[]{new Integer(1),new Integer(1),new Integer(1),new Integer(1),new Integer(1)};
 
@@ -134,7 +173,7 @@ public class BoardMap {
 		for(int z=0;z<5; z++){
 			for(int w=0 ; w<7 ;w++){
 				House h[][] = new House[12][12];
-				System.out.println("xxx");
+				//System.out.println("xxx");
 				for(int i=0; i<12 ; i++){
 					h[i] = this.cloneHH(houses);
 				}
@@ -153,7 +192,7 @@ public class BoardMap {
 						aux += h[j][i].getCost();
 					}
 
-					System.out.println(aux);
+					//System.out.println(aux);
 
 					if(aux<min){
 						min = aux;
@@ -164,14 +203,18 @@ public class BoardMap {
 			}
 		}
 
-		System.out.println(houses[0].getCost() + houses[1].getCost() + houses[2].getCost() + houses[3].getCost() + houses[4].getCost() + houses[5].getCost() + houses[6].getCost() + houses[7].getCost() + houses[8].getCost() + houses[9].getCost() + houses[10].getCost() + houses[11].getCost());
+		System.out.println("         1.5 1.4 1.3 1.2 1.1");
+		//System.out.println(houses[0].getCost() + houses[1].getCost() + houses[2].getCost() + houses[3].getCost() + houses[4].getCost() + houses[5].getCost() + houses[6].getCost() + houses[7].getCost() + houses[8].getCost() + houses[9].getCost() + houses[10].getCost() + houses[11].getCost());
 
 		for(int p = 0 ; p<12 ; p++){
+			System.out.printf("House%2d ", p+1);
 			for(int y = 0 ; y<5 ; y++){
-				System.out.printf("%d ", houses[p].getBattling()[y].intValue());
+				System.out.printf("%3d ",houses[p].getBattling()[y].intValue());
 			}
 			System.out.println();
 		}
+		
+		System.out.println("Finished calculating the order of the battles");
 
 	}
 

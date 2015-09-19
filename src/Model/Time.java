@@ -5,13 +5,13 @@ import java.util.ArrayList;
 public class Time {
 	
 	private float elapsedTime;
-	private ArrayList<Integer> costs = new ArrayList<Integer>();
+	private ArrayList<Float> costs = new ArrayList<Float>();
 	
-	public ArrayList<Integer> getCosts() {
+	public ArrayList<Float> getCosts() {
 		return costs;
 	}
 
-	public void setCosts(ArrayList<Integer> costs) {
+	public void setCosts(ArrayList<Float> costs) {
 		this.costs = costs;
 	}
 

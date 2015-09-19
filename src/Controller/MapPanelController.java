@@ -19,6 +19,9 @@ public class MapPanelController {
 	}
 
 	public static int getIndexOfImage(int i, int j){
+		if(boardMap.getMatrix()[i][j]>30){
+			return 3;
+		}
 		return boardMap.getMatrix()[i][j];
 	}
 
@@ -65,8 +68,8 @@ public class MapPanelController {
 		while(nextl != null){
 			Graph previous = null;
 			while(nextl != null){
-				//System.out.printf("%d ",nextl.getCost());
-				System.out.printf("%2d ",nextl.getH());
+				//System.out.printf("%f ",nextl.getCost());
+				System.out.printf("%2f ",nextl.getH());
 				previous = nextl;
 				nextl = nextl.getLest();
 
@@ -107,13 +110,13 @@ public class MapPanelController {
 			if(end.getLest().equals(end.getParent())){
 				movements.add("left");
 				boardMap.getTime().setElapsedTime(boardMap.getTime().getElapsedTime() + end.getLest().getCost());
-				boardMap.getTime().getCosts().add(new Integer(end.getLest().getCost()));
+				boardMap.getTime().getCosts().add(new Float(end.getLest().getCost()));
 				end = end.getLest();
 			}
 			if(end.getNorth().equals(end.getParent())){
 				movements.add("down");
 				boardMap.getTime().setElapsedTime(boardMap.getTime().getElapsedTime() + end.getNorth().getCost());
-				boardMap.getTime().getCosts().add(new Integer(end.getNorth().getCost()));
+				boardMap.getTime().getCosts().add(new Float(end.getNorth().getCost()));
 			
 				end = end.getNorth();
 			}
@@ -121,7 +124,7 @@ public class MapPanelController {
 				movements.add("up");
 				
 				boardMap.getTime().setElapsedTime(boardMap.getTime().getElapsedTime() + end.getSouth().getCost());
-				boardMap.getTime().getCosts().add(new Integer(end.getSouth().getCost()));
+				boardMap.getTime().getCosts().add(new Float(end.getSouth().getCost()));
 			
 				end = end.getSouth();
 			}
@@ -129,7 +132,7 @@ public class MapPanelController {
 				movements.add("right");
 				
 				boardMap.getTime().setElapsedTime(boardMap.getTime().getElapsedTime() + end.getWest().getCost());
-				boardMap.getTime().getCosts().add(new Integer(end.getWest().getCost()));
+				boardMap.getTime().getCosts().add(new Float(end.getWest().getCost()));
 			
 				end = end.getWest();
 			}
@@ -253,7 +256,7 @@ public class MapPanelController {
 
 	}
 	
-	public static ArrayList<Integer> getCosts(){
+	public static ArrayList<Float> getCosts(){
 		return boardMap.getTime().getCosts();
 	}
 

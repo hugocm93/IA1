@@ -8,12 +8,12 @@ public class Graph {
 	private Graph south;
 	private Graph lest;
 	private Graph west;
-	private int cost;
-	private int f,g,h;
+	private float cost;
+	private float f,g,h;
 	private Graph parent;
 	private int numberOfSteps;
 	
-	public Graph(int cost, Point self) {
+	public Graph(float cost, Point self) {
 		super();
 		this.cost = cost;
 		this.self = self;
@@ -30,28 +30,28 @@ public class Graph {
 	}
 
 
-	public int getF() {
+	public float getF() {
 		f = g + h;
 		return f;
 	}
 
-	public void setF(int f) {
+	public void setF(float f) {
 		this.f = f;
 	}
 
-	public int getG() {
+	public float getG() {
 		return g;
 	}
 
-	public void setG(int g) {
+	public void setG(float g) {
 		this.g = g;
 	}
 
-	public int getH() {
+	public float getH() {
 		return h;
 	}
 
-	public void setH(int h) {
+	public void setH(float h) {
 		this.h = h;
 	}
 
@@ -85,7 +85,7 @@ public class Graph {
 	public void setWest(Graph west) {
 		this.west = west;
 	}
-	public int getCost() {
+	public float getCost() {
 		return cost;
 	}
 	public void setCost(int cost) {

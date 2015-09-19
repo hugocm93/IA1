@@ -71,7 +71,7 @@ public class MapPanel extends Adapter{
 
 		MapPanelController.connectGraph();
 		MapPanelController.calcHCost();
-		MapPanelController.printMap();
+		//MapPanelController.printMap();
 		movements = MapPanelController.aStar();
 	}
 
