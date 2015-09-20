@@ -5,7 +5,7 @@ public class OSValidator {
 
 	public static String detectOS() {
 
-		System.out.println(OS);
+		//System.out.println(OS);
 
 		if (isWindows()) {
 			System.out.println("This is Windows");

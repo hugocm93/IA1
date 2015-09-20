@@ -40,7 +40,7 @@ public class BoardMap {
 
 		this.calcBattles();
 
-		
+
 		for(int j=0;j<Constants.mapSide;j++)
 			for(int i=0;i<Constants.mapSide;i++){
 				{
@@ -106,7 +106,7 @@ public class BoardMap {
 
 
 	private void calcBattles() {
-		
+
 		houses = new House[12];
 		Float knights[] = new Float[5];
 		Integer battling[] = new Integer[]{new Integer(1),new Integer(1),new Integer(1),new Integer(1),new Integer(1)};
@@ -171,7 +171,10 @@ public class BoardMap {
 
 
 		for(int z=0;z<5; z++){
-			for(int w=0 ; w<7 ;w++){
+			for(int w=0 ; w<8 ;w++){
+				if(z!=4 && w==7){
+					break;
+				}
 				House h[][] = new House[12][12];
 				//System.out.println("xxx");
 				for(int i=0; i<12 ; i++){
@@ -200,6 +203,7 @@ public class BoardMap {
 					}
 				}
 				houses = h[minIndex];
+
 			}
 		}
 
@@ -213,7 +217,7 @@ public class BoardMap {
 			}
 			System.out.println();
 		}
-		
+
 		System.out.println("Finished calculating the order of the battles");
 
 	}
