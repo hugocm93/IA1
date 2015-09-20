@@ -3,7 +3,7 @@ package Controller;
 public class Constants {
 	
 	static public int squareSize = 21;
-	static public int sideArea = 310;
+	static public int sideArea = 30;
 	static public int bottomArea = 35;
 	static public int mapSide = 42;
 	static public int widthDefault = 1024;

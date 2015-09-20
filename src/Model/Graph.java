@@ -19,16 +19,13 @@ public class Graph {
 		this.self = self;
 	}
 	
-	
 	public int getNumberOfSteps() {
 		return numberOfSteps;
 	}
 
-
 	public void setNumberOfSteps(int numberOfSteps) {
 		this.numberOfSteps = numberOfSteps;
 	}
-
 
 	public float getF() {
 		f = g + h;
@@ -91,12 +88,6 @@ public class Graph {
 	public void setCost(int cost) {
 		this.cost = cost;
 	}
-//	public boolean isVisited() {
-//		return visited;
-//	}
-//	public void setVisited(boolean visited) {
-//		this.visited = visited;
-//	}
 
 	public Graph getParent() {
 		return parent;
@@ -106,5 +97,4 @@ public class Graph {
 		this.parent = parent;
 	}
 	
-
 }

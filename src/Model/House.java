@@ -6,7 +6,6 @@ public class House {
 	Integer difficulty;
 	Float cost;
 	
-	
 	public House(int difficulty) {
 		super();
 		this.difficulty = difficulty;
@@ -42,11 +41,9 @@ public class House {
 		return knights;
 	}
 
-
 	public void setKnights(Float[] knights) {
 		this.knights = knights;
 	}
-
 
 	public Integer[] getBattling() {
 		return battling;
@@ -70,6 +67,4 @@ public class House {
 	public void setBattling(Integer[] battling) {
 		this.battling = battling;
 	}
-
-	
 }

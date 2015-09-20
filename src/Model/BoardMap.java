@@ -23,12 +23,26 @@ public class BoardMap {
 		graphMap = new HashMap<Point, Graph>();
 
 		try {
+			
 			in = new Scanner(new FileReader(path1 + path2 + "Map.txt"));
 			in2 = new Scanner(new FileReader(path1 + path2 + "Terrains.txt"));
 			in3 = new Scanner(new FileReader(path1 + path2 + "Houses.txt"));
 			in4 = new Scanner(new FileReader(path1 + path2 + "Knights.txt"));
+			
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			
+			in = new Scanner(this.getClass().getResourceAsStream("/DataSource/"+"Map.txt"));
+			in2 = new Scanner(this.getClass().getResourceAsStream("/DataSource/"+"Terrains.txt"));
+			in3 = new Scanner(this.getClass().getResourceAsStream("/DataSource/"+"Houses.txt"));
+			in4 = new Scanner(this.getClass().getResourceAsStream("/DataSource/"+"Knights.txt"));
+
+			if(in==null | in2==null | in3==null | in4==null){
+				try {
+					throw new FileNotFoundException();
+				} catch (FileNotFoundException e1) {
+					e1.printStackTrace();
+				}
+			}
 		}
 
 		in2.next("Rock");
@@ -39,7 +53,6 @@ public class BoardMap {
 		int mountain = in2.nextInt();
 
 		this.calcBattles();
-
 
 		for(int j=0;j<Constants.mapSide;j++)
 			for(int i=0;i<Constants.mapSide;i++){
@@ -103,7 +116,6 @@ public class BoardMap {
 				}
 			}
 	}
-
 
 	private void calcBattles() {
 
@@ -217,9 +229,7 @@ public class BoardMap {
 			}
 			System.out.println();
 		}
-
 		System.out.println("Finished calculating the order of the battles");
-
 	}
 
 	private House[] cloneHH(House h1[]){
@@ -249,77 +259,60 @@ public class BoardMap {
 		this.end = end;
 	}
 
-
 	public String getPath1() {
 		return path1;
 	}
-
 
 	public void setPath1(String path1) {
 		this.path1 = path1;
 	}
 
-
 	public String getPath2() {
 		return path2;
 	}
-
 
 	public void setPath2(String path2) {
 		this.path2 = path2;
 	}
 
-
 	public Scanner getIn() {
 		return in;
 	}
-
 
 	public void setIn(Scanner in) {
 		this.in = in;
 	}
 
-
 	public Scanner getIn2() {
 		return in2;
 	}
-
 
 	public void setIn2(Scanner in2) {
 		this.in2 = in2;
 	}
 
-
 	public HashMap<Point, Graph> getGraphMap() {
 		return graphMap;
 	}
-
 
 	public void setGraphMap(HashMap<Point, Graph> graphMap) {
 		this.graphMap = graphMap;
 	}
 
-
 	public void setMatrix(int[][] matrix) {
 		this.matrix = matrix;
 	}
-
 
 	public void setStart(Point start) {
 		this.start = start;
 	}
 
-
 	public Time getTime() {
 		return time;
 	}
 
-
 	public void setTime(Time time) {
 		this.time = time;
 	}
-
-
-
 
 }

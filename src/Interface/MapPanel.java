@@ -9,18 +9,14 @@ import java.awt.image.BufferedImageOp;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-
 import Controller.Constants;
 import Controller.Flow;
 import Controller.MapPanelController;
-
 import org.imgscalr.Scalr;
-
 import java.util.ListIterator;
 
 public class MapPanel extends Adapter{
@@ -100,7 +96,14 @@ public class MapPanel extends Adapter{
 				map = ImageIO.read(new File(path1 + path3 + "terrains.png"));
 				players = ImageIO.read(new File(path1 + path3 + "characters.png"));
 			} catch (IOException e) {
-				System.out.println(path1 + path3);
+		
+				try{
+				map = ImageIO.read(this.getClass().getResource("/Images/" + "terrains.png"));
+				players =  ImageIO.read(this.getClass().getResource("/Images/" + "characters.png"));
+				}
+				catch(Exception w){
+					System.out.println("Could not load resources");
+				}
 			}
 		}
 
@@ -185,7 +188,8 @@ public class MapPanel extends Adapter{
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		if(e.getSource() == startButton){
+		if(e.getSource() == startButton && startButton.isEnabled() == true){
+			startButton.setEnabled(false);
 			ListIterator<String> ls = movements.listIterator();
 
 			while(ls.hasNext()){
@@ -211,7 +215,6 @@ public class MapPanel extends Adapter{
 				this.paintImmediately(current.getBounds());
 			}
 		}
-
 	}
 	
 	private void move(int index){

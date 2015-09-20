@@ -27,8 +27,4 @@ public class Time {
 	public void setElapsedTime(float elapsedTime) {
 		this.elapsedTime = elapsedTime;
 	}
-
-	
-	
-
 }

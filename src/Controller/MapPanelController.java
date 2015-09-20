@@ -4,7 +4,6 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-
 import Model.BoardMap;
 import Model.Graph;
 
@@ -105,7 +104,6 @@ public class MapPanelController {
 		ArrayList<String> movements = new ArrayList<String>();
 
 		while(end != start){
-			//System.out.println(end);
 			
 			if(end.getLest().equals(end.getParent())){
 				movements.add("left");
@@ -153,7 +151,6 @@ public class MapPanelController {
 			return;
 		}
 		closedList.add(current);
-
 
 		if(current.getLest() != null){
 			if(!closedList.contains(current.getLest())){
@@ -252,7 +249,6 @@ public class MapPanelController {
 		Graph aux = openList.remove(0);
 
 		MapPanelController.aStarAlgorithm(openList, closedList, start, end, aux);
-
 
 	}
 	
