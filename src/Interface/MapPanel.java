@@ -3,7 +3,6 @@ package Interface;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Rectangle;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.awt.image.BufferedImageOp;
@@ -36,6 +35,7 @@ public class MapPanel extends Adapter{
 	private BufferedImage player[][] = new BufferedImage[12][8];
 	private JLabel playerSprite[] = new JLabel[5]; 
 	private JLabel costs = new JLabel("0"); 
+	private JLabel current = new JLabel("0");
 	private JLabel maxTime = new JLabel(String.valueOf(12*60));
 	private JButton startButton;
 	private ArrayList<String> movements;
@@ -52,8 +52,10 @@ public class MapPanel extends Adapter{
 		playerSprite[0].setVisible(true);
 		costs.setVisible(true);
 		maxTime.setVisible(true);
+		current.setVisible(true);
 		this.add(costs);
 		this.add(maxTime);
+		this.add(current);
 		playerSprite[0].addKeyListener(this);
 
 		this.setFocusable(true);
@@ -88,6 +90,7 @@ public class MapPanel extends Adapter{
 		startButton.setBounds(Constants.squareSize*Constants.mapSide, Constants.squareSize*Constants.mapSide-30, 80, 30);
 		costs.setBounds(Constants.squareSize*Constants.mapSide, Constants.squareSize*Constants.mapSide-600, 80, 30);
 		maxTime.setBounds(Constants.squareSize*Constants.mapSide, Constants.squareSize*Constants.mapSide-570, 80, 30);
+		current.setBounds(Constants.squareSize*Constants.mapSide, Constants.squareSize*Constants.mapSide-630, 80, 30);
 		g.finalize();
 	}
 
@@ -200,9 +203,12 @@ public class MapPanel extends Adapter{
 				if(aux == "down"){
 					this.walkDown(0);
 				}
-				float aux2 = MapPanelController.getCosts().remove(0).floatValue() + Float.parseFloat(costs.getText());
+				float aux3 = MapPanelController.getCosts().remove(0).floatValue();
+				float aux2 = aux3 + Float.parseFloat(costs.getText());
 				costs.setText(String.valueOf(aux2));
+				current.setText(String.valueOf(aux3));
 				this.paintImmediately(costs.getBounds());
+				this.paintImmediately(current.getBounds());
 			}
 		}
 
