@@ -220,7 +220,7 @@ public class BoardMap {
 		}
 
 		System.out.println("         1.5 1.4 1.3 1.2 1.1");
-		//System.out.println(houses[0].getCost() + houses[1].getCost() + houses[2].getCost() + houses[3].getCost() + houses[4].getCost() + houses[5].getCost() + houses[6].getCost() + houses[7].getCost() + houses[8].getCost() + houses[9].getCost() + houses[10].getCost() + houses[11].getCost());
+		System.out.println( "Total cost of the houses"+ houses[0].getCost() + houses[1].getCost() + houses[2].getCost() + houses[3].getCost() + houses[4].getCost() + houses[5].getCost() + houses[6].getCost() + houses[7].getCost() + houses[8].getCost() + houses[9].getCost() + houses[10].getCost() + houses[11].getCost());
 
 		for(int p = 0 ; p<12 ; p++){
 			System.out.printf("House%2d ", p+1);
